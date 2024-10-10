@@ -4,6 +4,7 @@ def registrar_inversor():
    nombre=input("Ingrese su nombre:")
    apellido=input("Ingrese su apellido: ")
    email=input("Ingrese su mail")
+   contraseña= input("Elija una contraseña")
    pregunta_secreta = input("Ingrese su pregunta secreta: ")
    respuesta_secreta = input("Ingrese su respuesta secreta: ")
 
