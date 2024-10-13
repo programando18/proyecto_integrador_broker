@@ -1,4 +1,30 @@
-import re 
+import re
+
+def registrar_inversor():
+
+   cuit=input("Ingrese por favor su cuit:")
+   nombre=input("Ingrese su nombre:")
+   apellido=input("Ingrese su apellido: ")
+   email=input("Ingrese su mail")
+   contraseña= input("Elija una contraseña")
+   pregunta_secreta = input("Ingrese su pregunta secreta: ")
+   respuesta_secreta = input("Ingrese su respuesta secreta: ")
+
+   inversor = {
+             'CUIT':  cuit,
+             'Nombre': nombre,
+             'Apellido': apellido,
+             'Email': email,
+             'Contraseña': contraseña,
+             'Pregunta Secreta': pregunta_secreta,
+             'Respuesta Secreta': respuesta_secreta
+    }
+   print("Registro exitoso!") 
+
+
+
+
+
 
 def ingresar_email(self):
         print("---------- Ingreso de Correo Electrónico ----------")
@@ -13,6 +39,8 @@ def ingresar_email(self):
                 print("Correo electrónico no válido. Intente nuevamente.")
         print("---------------------------------------------------")
         return self.__email
+
+
 
 def validar_email(self, email):
         """Encapsula la validación del formato del correo electrónico."""
