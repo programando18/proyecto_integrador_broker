@@ -1,8 +1,10 @@
 import re
+from validaciones import validar_cuit, validar_nombre, validar_apellido, validar_email, validar_contraseña, validar_pregunta, validar_respuesta
 
 def registrar_inversor():
 
    cuit=input("Ingrese por favor su cuit:")
+    
    nombre=input("Ingrese su nombre:")
    apellido=input("Ingrese su apellido: ")
    email=input("Ingrese su mail")
@@ -19,8 +21,8 @@ def registrar_inversor():
              'Pregunta Secreta': pregunta_secreta,
              'Respuesta Secreta': respuesta_secreta
     }
+    
    print("Registro exitoso!") 
-
 
 
 

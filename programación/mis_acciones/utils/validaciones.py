@@ -1,50 +1,43 @@
+import re
 from inversor import inversor
 
-def validar_cuit():
-    #   cuit = input("Ingrese por favor su CUIT (11 dígitos): ")
-    # while len(cuit) != 11 or not cuit.isdigit():
-    #     print("Error: El CUIT debe tener 11 dígitos numéricos.")
-    #     cuit = input("Ingrese por favor su CUIT (11 dígitos): ")
-    return ""
-
+def validar_cuit(cuit):
+ """Valida que el CUIT tenga 11 dígitos numéricos."""
+ return len(cuit) == 11 and cuit.isdigit()
+ 
 def validar_nombre(nombre): 
-    #  while not nombre.isalpha():
-    #     print("Error: El nombre debe contener solo letras.")
-    #     nombre = input("Ingrese su nombre: ")
     return nombre.isalpha()
 
 def validar_apellido(apellido): 
-    #falta logica similar al nombre
     return apellido.isalpha()
 
-
 def validar_email(email): #validacion de mail
+    """Valida el formato del correo electrónico."""
     patron = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     return re.match(patron, email) is not None
 
-
 def validar_contraseña(contraseña):
-    #    while len(contraseña) < 6: modificar esto
-    #     print("Error: La contraseña debe tener al menos 6 caracteres.")
-    return len(contraseña) >= 8
+       while len(contraseña) < 6: 
+        raise ValueError("Error: La contraseña debe tener al menos 6 caracteres.")
+return len(contraseña) >= 8
 
-def validar_pregunta(): 
+def validar_pregunta(pregunta): 
     "Valida que la pregunta secreta no esté vacía."""
-    return ""
+    return  bool(pregunta.strip())
 
 
-def validar_respuesta(): 
+def validar_respuesta(respuesta): 
     "Valida que la respuesta secreta no esté vacía."""
-    return ""
+    return  bool(respuesta.strip())
 
 
 def main():
     email, contraseña = formulario_login()
     
     if not validar_email(email):
-        print("El correo electrónico no es válido.")
+       raise ValueError("El correo electrónico no es válido.")
     elif not validar_contraseña(contraseña):
-        print("La contraseña debe tener al menos 8 caracteres.")
+        raise ValueError("La contraseña debe tener al menos 8 caracteres.")
     else:
         print("Inicio de sesión exitoso.")
 
