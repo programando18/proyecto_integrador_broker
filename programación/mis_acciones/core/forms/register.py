@@ -1,3 +1,5 @@
+
+import re 
 def registrar_inversor():
 
    cuit=input("Ingrese por favor su cuit:")
@@ -17,7 +19,7 @@ def registrar_inversor():
              'Pregunta Secreta': pregunta_secreta,
              'Respuesta Secreta': respuesta_secreta
     }
-   print("Registro exitoso!")import re 
+   print("Registro exitoso!")
 
 def ingresar_email(self):
         print("---------- Ingreso de Correo Electrónico ----------")
