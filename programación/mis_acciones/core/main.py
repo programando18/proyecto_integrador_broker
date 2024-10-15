@@ -1,15 +1,7 @@
 from interfaces.bienvenida import bienvenida
 from interfaces.panel_de_control import panel_de_control
 from forms.login import formulario_login
-
-
-class Usuario:
-    def __init__(self, nombre, total_invertido, rendimiento):
-        self.nombre = nombre
-        self.total_invertido = total_invertido
-        self.rendimiento = rendimiento
-        self.saldo = "1000"
-        self.acciones = ["AAPL", "AMZN", "GOOGL", "MSFT", "TSLA"]
+from inversor import inversor
 
 
 def main():
