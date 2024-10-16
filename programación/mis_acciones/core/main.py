@@ -2,6 +2,7 @@ from interfaces.bienvenida import bienvenida
 from interfaces.panel_de_control import panel_de_control
 from forms.login import formulario_login
 from utils.validaciones import validar_contraseña, validar_email
+from models.inversor import Inversor
 
 
 def main():
@@ -23,9 +24,24 @@ def main():
             #
             # -------------------------------------------------|
 
-            # Si todo va bien:
+            # Si todo va bien, traemos los datos de la BBDD
+            # y creamos una instancia de Inversor:
 
-            opcionPanel = panel_de_control(usuario)
+            # DATOS FALSOS POR AHORA
+            usuario = {
+                "nombre": "Christian",
+                "apellido": "Caracach",
+                "dni": "123123",
+                "telefono": "123123",
+                "total_invertido": "0",
+                "rendimiento": "0",
+                "saldo": "0",
+                "acciones": ("AAPL", "TSLA", "AMZN"),
+            }
+
+            opcionPanel = panel_de_control(usuario)  # Acá mandaríamos la instancia
+
+            # Usuario selecciona opción del panel
             while opcionPanel != "4":
                 if opcionPanel == "1":
                     print("Comprar")
@@ -33,9 +49,13 @@ def main():
                     print("Vender")
                 elif opcionPanel == "3":
                     print("Ver gráfico")
+                elif opcionPanel == "4":
+                    break
                 else:
                     print("Opción inválida")
-            # Acá va la lógica de login
+
+            opcion = bienvenida()
+
         elif opcion == "2":
             # Acá va el formulario de recuperar contraseña
             # Acá va la lógica de recuperar contraseña

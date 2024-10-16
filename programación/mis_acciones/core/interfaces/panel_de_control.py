@@ -1,28 +1,33 @@
 def panel_de_control(usuario):
+    print(usuario["nombre"])
     print("|||-------------------------------------|||")
     print("|||           MIS ACCIONES              |||")
     print("|||-------------------------------------|||")
-    if len(usuario.nombre) > 29:
-        print(f"||| Usuario: {usuario.nombre[:26]}... |||")
+    if len(usuario["nombre"]) > 29:
+        print(f"||| Usuario: {usuario['nombre'][:26]}")
     else:
-        print(f"||| Usuario: {usuario.nombre:<29} |||")
-    if len(usuario.total_invertido) > 29:
-        print(f"||| Total invertido: {usuario.total_invertido[:17]}... |||")
+        print(f"||| Usuario: {usuario['nombre']}")
+    if len(usuario["apellido"]) > 29:
+        print(f"||| Apellido: {usuario['apellido'][:26]}")
     else:
-        print(f"||| Total invertido: {usuario.total_invertido:<21} |||")
-    if len(usuario.rendimiento) > 29:
-        print(f"||| Rendimiento: {usuario.nombre[:23]}... |||")
+        print(f"||| Apellido: {usuario['apellido']}")
+    if len(usuario["total_invertido"]) > 29:
+        print(f"||| Total invertido: {usuario['total_invertido'][:17]}")
     else:
-        print(f"||| Rendimiento: {usuario.nombre:<26} |||")
-    if len(usuario.saldo) > 29:
-        print(f"||| Saldo: {usuario.saldo[:23]}... |||")
+        print(f"||| Total invertido: {usuario['total_invertido']}")
+    if len(usuario["rendimiento"]) > 29:
+        print(f"||| Rendimiento: {usuario['rendimiento'][:23]}")
     else:
-        print(f"||| Saldo: {usuario.saldo:<26} |||")
+        print(f"||| Rendimiento: {usuario['rendimiento']}")
+    if len(usuario["saldo"]) > 29:
+        print(f"||| Saldo: {usuario['saldo'][:23]}")
+    else:
+        print(f"||| Saldo: {usuario['saldo']}")
     print("|||-------------------------------------|||")
-    print("||| Activos:                           |||")
+    print("||| Activos:                            |||")
 
-    for i, accion in enumerate(usuario.acciones, start=1):
-        print(f"||| {i}. {accion:<33} |||")
+    for i, accion in enumerate(usuario["acciones"], start=1):
+        print(f"||| {i}. {accion}")
 
     print("|||-------------------------------------|||")
 
