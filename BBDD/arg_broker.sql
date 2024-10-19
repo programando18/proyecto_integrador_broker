@@ -40,61 +40,18 @@ CREATE TABLE historico_cotizaciones (
     id_historico INT PRIMARY KEY AUTO_INCREMENT,
     fecha_cotizacion DATE NOT NULL,
     precio_compra FLOAT NOT NULL,
-    precio_venta FLOAT NOT NULL
-);
-CREATE DATABASE arg_broker;
-
-USE arg_broker;
-
-CREATE TABLE inversor (
-    id_inversor INT PRIMARY KEY AUTO_INCREMENT,
-    cuit VARCHAR(11) NOT NULL,  
-    nombre VARCHAR(50) NOT NULL,
-    apellido VARCHAR(50) NOT NULL,
-    contraseña VARCHAR(100) NOT NULL,
-    saldo FLOAT DEFAULT 0,  
-    id_contacto INT,
-    id_tipo_inversor INT,
-    fecha_alta DATE,
-    pregunta VARCHAR(100), 
-    respuesta VARCHAR(100),
-    
-);
-
-CREATE TABLE tipo_contacto (
-    id_contacto INT PRIMARY KEY AUTO_INCREMENT,
-    telefono VARCHAR(20),
-    email VARCHAR(100) NOT NULL
-);
-
-CREATE TABLE tipo_inversor (
-    id_tipo_inversor INT PRIMARY KEY AUTO_INCREMENT,
-    descripcion_inversor VARCHAR(100) NOT NULL
-);
-
-CREATE TABLE acción (
-    id_accion INT PRIMARY KEY AUTO_INCREMENT,
-    simbolo_accion VARCHAR(10) NOT NULL,
-    nombre_accion VARCHAR(100) NOT NULL,
-    precio_compra_actual  FLOAT NOT NULL,
-    precio_venta_actual FLOAT NOT NULL
-);
-
-CREATE TABLE historico_cotizaciones (
-    id_historico INT PRIMARY KEY AUTO_INCREMENT,
-    fecha_cotizacion DATE NOT NULL,
-    precio_compra FLOAT NOT NULL,
     precio_venta FLOAT NOT NULL,
-    cant_venta INT NOT NULL,
-    cant_compra INT NOT NULL,
-    id_ accion INT NOT NULL
+    cantidad_venta INT NOT NULL,
+    cantidad_compra INT NOT NULL,
+    id_accion INT NOT NULL
 );
+
 CREATE TABLE portafolio (
     id_portafolio INT PRIMARY KEY AUTO_INCREMENT,
     id_inversor INT,
+    rendimiento FLOAT,
     total_invertido FLOAT,
     saldo FLOAT
-    id_accion INT NOT NULL
 );
 
 CREATE TABLE transaccion (
@@ -104,9 +61,11 @@ CREATE TABLE transaccion (
     fecha DATE NOT NULL,
     monto FLOAT NOT NULL,
     comisión FLOAT NOT NULL
-     id_accion INT NOT NULL
 );
---CREAR LAS FK, QUE CONCUERDEN CON EL MODELO RELACIONAL 
+
+   
+
+-CREAR LAS FK, QUE CONCUERDEN CON EL MODELO RELACIONAL 
 ALTER TABLE inversor
 ADD CONSTRAINT fk_id_contacto FOREIGN KEY (id_contacto) REFERENCES tipo_contacto(id_contacto);
 
