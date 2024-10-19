@@ -1,6 +1,7 @@
 from interfaces.bienvenida import bienvenida
 from interfaces.panel_de_control import panel_de_control
 from forms.login import formulario_login
+from forms.register import registrar_inversor
 from utils.validaciones import validar_contraseña, validar_email
 from models.inversor import Inversor
 
@@ -46,9 +47,17 @@ def main():
             # Acá va la lógica de recuperar contraseña
             print("Recuperar contraseña")
         elif opcion == "3":
-            # Acá va el formulario de registro
-            # Acá va la lógica de registro
-            print("Registrarse")
+            inversor = registrar_inversor()
+
+            # Acá nos conectamos con la BBDD y registramos al usuario
+            # ------------------------------------------------|
+            #
+            #
+            # -------------------------------------------------|
+
+            # Si todo va bien hacemos
+            print("Inversor creado exitosamente")
+            opcion = bienvenida()
         elif opcion == "4":
             print("Gracias por usar Mis Acciones")
             return
