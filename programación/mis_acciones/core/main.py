@@ -38,24 +38,9 @@ def main():
                 "saldo": "0",
                 "acciones": ("AAPL", "TSLA", "AMZN"),
             }
-
-            opcionPanel = panel_de_control(usuario)  # Acá mandaríamos la instancia
-
-            # Usuario selecciona opción del panel
-            while opcionPanel != "4":
-                if opcionPanel == "1":
-                    print("Comprar")
-                elif opcionPanel == "2":
-                    print("Vender")
-                elif opcionPanel == "3":
-                    print("Ver gráfico")
-                elif opcionPanel == "4":
-                    break
-                else:
-                    print("Opción inválida")
+            panel_de_control(usuario)  # Acá mandaríamos la instancia
 
             opcion = bienvenida()
-
         elif opcion == "2":
             # Acá va el formulario de recuperar contraseña
             # Acá va la lógica de recuperar contraseña
