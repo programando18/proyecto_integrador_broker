@@ -84,12 +84,14 @@ CREATE TABLE historico_cotizaciones (
     id_historico INT PRIMARY KEY AUTO_INCREMENT,
     fecha_cotizacion DATE NOT NULL,
     precio_compra FLOAT NOT NULL,
-    precio_venta FLOAT NOT NULL
+    precio_venta FLOAT NOT NULL,
+    cant_venta INT NOT NULL,
+    cant_compra INT NOT NULL,
+    id_ accion INT NOT NULL
 );
 CREATE TABLE portafolio (
     id_portafolio INT PRIMARY KEY AUTO_INCREMENT,
     id_inversor INT,
-    rendimiento FLOAT,
     total_invertido FLOAT,
     saldo FLOAT
     id_accion INT NOT NULL
@@ -121,3 +123,6 @@ ADD CONSTRAINT fk_id_accion_portafolio FOREIGN KEY (id_accion)REFERENCES accion(
 ALTER TABLE transaccion
 ADD CONSTRAINT fk_id_inversor_transaccion FOREIGN KEY (id_inversor) REFERENCES inversor(id_inversor);
 ADD CONSTRAINT fk_id_accion_transaccion FOREIGN KEY (id_accion)REFERENCES accion(id_accion);
+
+ALTER TABLE historico_cotizaciones
+ADD CONSTRAINT fk_id_accion_cotizaciones FOREIGN KEY (id_accion)REFERENCES accion(id_accion)
