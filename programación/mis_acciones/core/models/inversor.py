@@ -1,6 +1,5 @@
 class Inversor:
     def __init__(self, nombre, apellido, total_invertido, rendimiento, saldo, acciones):
-        # FALTA LOS DEMAS ATRIBUTOS, ENTRAN EN SPRINT 2 FRANCO SE ENCARGA
         self.__nombre = nombre
         self.__apellido = apellido
         self.__total_invertido = total_invertido
