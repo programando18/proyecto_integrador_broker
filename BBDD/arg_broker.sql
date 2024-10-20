@@ -14,7 +14,7 @@ CREATE TABLE inversor (
     fecha_alta DATE,
     pregunta VARCHAR(100), 
     respuesta VARCHAR(100),
-    id_portafolio INT
+    
 );
 
 CREATE TABLE tipo_contacto (
@@ -32,7 +32,7 @@ CREATE TABLE acción (
     id_accion INT PRIMARY KEY AUTO_INCREMENT,
     simbolo_accion VARCHAR(10) NOT NULL,
     nombre_accion VARCHAR(100) NOT NULL,
-    ultimo_operando FLOAT NOT NULL,
+    precio_compra_actual  FLOAT NOT NULL,
     precio_venta_actual FLOAT NOT NULL
 );
 
@@ -40,7 +40,10 @@ CREATE TABLE historico_cotizaciones (
     id_historico INT PRIMARY KEY AUTO_INCREMENT,
     fecha_cotizacion DATE NOT NULL,
     precio_compra FLOAT NOT NULL,
-    precio_venta FLOAT NOT NULL
+    precio_venta FLOAT NOT NULL,
+    cantidad_venta INT NOT NULL,
+    cantidad_compra INT NOT NULL,
+    id_accion INT NOT NULL
 );
 
 CREATE TABLE portafolio (
@@ -60,25 +63,25 @@ CREATE TABLE transaccion (
     comisión FLOAT NOT NULL
 );
 
+   
 
---CREAR LAS FK, QUE CONCUERDEN CON EL MODELO RELACIONAL 
+-CREAR LAS FK, QUE CONCUERDEN CON EL MODELO RELACIONAL 
 ALTER TABLE inversor
 ADD CONSTRAINT fk_id_contacto FOREIGN KEY (id_contacto) REFERENCES tipo_contacto(id_contacto);
 
 
 ALTER TABLE inversor
 ADD CONSTRAINT fk_id_tipo_inversor FOREIGN KEY (id_tipo_inversor) REFERENCES tipo_inversor(id_tipo_inversor);
+ADD CONSTRAINT fk_id_tipo_contacto FOREIGN KEY ( id_contacto ) REFERENCES tipo_contacto( id_contacto );
 
 
 ALTER TABLE portafolio
 ADD CONSTRAINT fk_id_inversor FOREIGN KEY (id_inversor) REFERENCES inversor(id_inversor);
-
+ADD CONSTRAINT fk_id_accion_portafolio FOREIGN KEY (id_accion)REFERENCES accion(id_accion)
 
 ALTER TABLE transaccion
 ADD CONSTRAINT fk_id_inversor_transaccion FOREIGN KEY (id_inversor) REFERENCES inversor(id_inversor);
+ADD CONSTRAINT fk_id_accion_transaccion FOREIGN KEY (id_accion)REFERENCES accion(id_accion);
 
-
-
-
-
-
+ALTER TABLE historico_cotizaciones
+ADD CONSTRAINT fk_id_accion_cotizaciones FOREIGN KEY (id_accion)REFERENCES accion(id_accion)

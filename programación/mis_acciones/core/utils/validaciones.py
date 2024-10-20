@@ -2,7 +2,6 @@ import re
 
 
 def validar_cuit(cuit):
-    """Valida que el CUIT tenga 11 dígitos numéricos."""
     return len(cuit) == 11 and cuit.isdigit()
 
 
@@ -15,7 +14,6 @@ def validar_apellido(apellido):
 
 
 def validar_email(email):
-    """Valida el formato del correo electrónico."""
     patron = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
     return re.match(patron, email) is not None
 

@@ -37,4 +37,15 @@ def panel_de_control(usuario):
     print("3. Ver gráfico")
     print("4. Salir")
     opcion = input("Qué deseas hacer?: ")
-    return opcion
+
+    while opcion != "4":
+        if opcion == "1":
+            print("Comprar")
+        elif opcion == "2":
+            print("Vender")
+        elif opcion == "3":
+            print("Ver gráfico")
+        elif opcion == "4":
+            break
+        else:
+            print("Opción inválida")

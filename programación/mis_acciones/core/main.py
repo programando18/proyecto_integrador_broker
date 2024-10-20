@@ -1,6 +1,8 @@
 from interfaces.bienvenida import bienvenida
 from interfaces.panel_de_control import panel_de_control
 from forms.login import formulario_login
+from forms.register import registrar_inversor
+from forms.recover import recuperar_contraseña, ingresar_cuit
 from utils.validaciones import validar_contraseña, validar_email
 from models.inversor import Inversor
 
@@ -38,32 +40,39 @@ def main():
                 "saldo": "0",
                 "acciones": ("AAPL", "TSLA", "AMZN"),
             }
-
-            opcionPanel = panel_de_control(usuario)  # Acá mandaríamos la instancia
-
-            # Usuario selecciona opción del panel
-            while opcionPanel != "4":
-                if opcionPanel == "1":
-                    print("Comprar")
-                elif opcionPanel == "2":
-                    print("Vender")
-                elif opcionPanel == "3":
-                    print("Ver gráfico")
-                elif opcionPanel == "4":
-                    break
-                else:
-                    print("Opción inválida")
+            panel_de_control(usuario)  # Acá mandaríamos la instancia
 
             opcion = bienvenida()
-
         elif opcion == "2":
-            # Acá va el formulario de recuperar contraseña
-            # Acá va la lógica de recuperar contraseña
-            print("Recuperar contraseña")
+            cuit = ingresar_cuit()
+
+            # Acá nos conectamos con la BBDD y buscamos al usuario
+            # ------------------------------------------------|
+            #
+            #
+            # -------------------------------------------------|
+
+            usuario = {
+                "Pregunta Secreta": "¿Cuál es tu color favorito?",
+                "Respuesta Secreta": "Rojo",
+                "Contraseña": "123456",
+            }
+            # Si todo va bien hacemos
+            recuperar_contraseña(usuario)
+
+            opcion = bienvenida()
         elif opcion == "3":
-            # Acá va el formulario de registro
-            # Acá va la lógica de registro
-            print("Registrarse")
+            inversor = registrar_inversor()
+
+            # Acá nos conectamos con la BBDD y registramos al usuario
+            # ------------------------------------------------|
+            #
+            #
+            # -------------------------------------------------|
+
+            # Si todo va bien hacemos
+            print("Inversor creado exitosamente")
+            opcion = bienvenida()
         elif opcion == "4":
             print("Gracias por usar Mis Acciones")
             return
