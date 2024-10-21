@@ -1,23 +1,24 @@
+
+from tipo_inversor import Tipo_Inversor
+
 class Inversor:
-    def __init__(self, nombre, apellido, total_invertido, rendimiento, saldo, acciones):
+    def __init__(self, nombre, apellido,tipo_inversor,  total_invertido, rendimiento, saldo, acciones):
         self.__nombre = nombre
         self.__apellido = apellido
+        self.__tipo_inversor = tipo_inversor
         self.__total_invertido = total_invertido
         self.__rendimiento = rendimiento
         self.__saldo = saldo
         self.__acciones = acciones
         self.__historial = []
         self.__monto = 0
-        self.__tasa_interes = 0
+        self.__tasa_interes = 0 
+
+    def obtener_tipo_inversor(self): 
+        return self.__tipo_inversor 
 
     def agregar_a_historial(self, actividad):
-        self.__historial.append(actividad)
-
-    def obtener_historial(self):
-        return self.__historial
-
-    def agregar_saldo(self, monto):
-        """Agrega un monto al saldo del inversor."""
+        return self.__historial.append(actividad)
 
     def agregar_saldo(self, monto):
         """Agrega un monto al saldo del inversor."""
