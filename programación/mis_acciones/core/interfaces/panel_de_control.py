@@ -1,3 +1,6 @@
+from interfaces.panel_de_acciones import panel_de_acciones
+
+
 def panel_de_control(usuario):
     print(usuario["nombre"])
     print("|||-------------------------------------|||")
@@ -34,18 +37,25 @@ def panel_de_control(usuario):
     print("Seleccione una opción:")
     print("1. Comprar Acciones")
     print("2. Vender Acciones")
-    print("3. Ver gráfico")
-    print("4. Salir")
+    print("3. Salir")
     opcion = input("Qué deseas hacer?: ")
 
-    while opcion != "4":
+    while opcion != "3":
         if opcion == "1":
-            print("Comprar")
+            accion = panel_de_acciones()
+
+            # Acá nos conectamos con la BBDD y procesamos la compra
+            # ------------------------------------------------|
+            #
+            #
+            # -------------------------------------------------|
+
+            print(accion)
+
+            opcion = input("¿Deseas hacer algo más? (s/n): ")
         elif opcion == "2":
             print("Vender")
         elif opcion == "3":
-            print("Ver gráfico")
-        elif opcion == "4":
             break
         else:
             print("Opción inválida")
