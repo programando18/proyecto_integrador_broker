@@ -78,6 +78,7 @@ def main():
             return
         else:
             print("Opción inválida")
+            opcion = bienvenida()
 
 
 main()
