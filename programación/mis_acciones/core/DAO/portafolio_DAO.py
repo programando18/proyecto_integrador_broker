@@ -9,24 +9,24 @@ class PortafolioDao(DataAccessDAO):
 
  def get(self,id_portafolio:int)->object:
      
-    With self.__connection_mysql() as connect:
+       With self.__connection_mysql() as connect:
+     
         try:
             cursor = connect.cursor()
-            query="  Select saldo, total_invertido,nombre.Inversor + apellido.Inversor,nombre_accion.accion as accion FROM portafolio
-                     join Inversor on id_inversor.inversor = id_inversor.portafolio
-                     join accion on id_accion.accion = id_accion.portafolio where id_portafolio = %S "
-               
+            query= "SELECT saldo, total_invertido, id_accion FROM Portafolio  WHERE id_portafolio=%s "
             cursor.execute(query,(id,))  
-            row = cursor.fetchone()
+            row = cursor.fetchone()   
+               
+            
             if row:
                 return object(row[0],row[1],row[2],row[3]) 
             return None
         except mysql.connector.Error as err:
                    raise err   
                
- def Update(self,portafolio:Portafolio):
+ def Update(Self,portafolio:Portafolio):
       
-       With self.__connection_mysql() as connect:
+       With Self.__connection_mysql() as connect:
             
             try:
              cursor= connect.cursor()
