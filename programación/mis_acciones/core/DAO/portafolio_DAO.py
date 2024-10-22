@@ -62,3 +62,11 @@ class PortafolioDao(DataAccessDAO):
        
        except mysql.connector.Error as err:
                    raise err                  
+  def Delete (self,id_portafolio:int):
+      With self.__connection_mysql() as connect:  
+          
+      try:    
+             cursor = connect.cursor()  
+             query = "DELETE FROM portafolio WHERE id_portafolio = %s"
+             cursor.execute(query,(id_portafolio))   
+             connect.commit()      
