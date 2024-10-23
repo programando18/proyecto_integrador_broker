@@ -4,10 +4,10 @@ import mysql.connector
 import logging
 from mysql.connector import errorcode
 from portafolio_DAO import portafolio
-from programación.mis_acciones.core.DAO import DataAccessPortaDAO
+from programación.mis_acciones.core.DAO import data_access_dao
 from programación.mis_acciones.core.models import accion, portafolio
 
-class PortafolioDao(DataAccessPortaDAO.DataAccessPortaDAO):
+class PortafolioDao(data_access_dao.DataAccessPortaDAO):
 
   def get(self,id_portafolio:int)->object:
      
