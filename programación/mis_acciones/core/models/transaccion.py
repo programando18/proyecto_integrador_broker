@@ -13,6 +13,16 @@ class Transaccion:
     def tipo_operacion(self): 
         return self.__tipo
 
+    def realizar_transaccion(self,inversor,monto): 
+          if inversor.validar_saldo_suficiente(monto):
+            inversor.descontar_saldo(monto)
+            # Registrar la transacción, guardar en BD, etc.
+            self.__monto = monto
+            self.__comision = inversor.calcular_comision(monto)
+            inversor.agregar_a_historial(f"Transacción realizada por ${monto}.")
+          else:
+            raise ValueError("Saldo insuficiente para realizar la transacción.")
+
     def obtener_fecha(self): 
         return self.__fecha
 

@@ -85,3 +85,7 @@ ADD CONSTRAINT fk_id_accion_transaccion FOREIGN KEY (id_accion)REFERENCES accion
 
 ALTER TABLE historico_cotizaciones
 ADD CONSTRAINT fk_id_accion_cotizaciones FOREIGN KEY (id_accion)REFERENCES accion(id_accion)
+
+
+
+

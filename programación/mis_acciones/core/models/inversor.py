@@ -41,5 +41,30 @@ class Inversor:
         else:
             raise ValueError("El valor de la tasa de interes debe ser mayor a 0")
 
+
+    def validar_saldo(saldo,monto,comision): 
+        total = monto + (monto * comision)
+        if saldo >= monto: 
+            return True
+        else: 
+            return False
+   
+
+    def descontar_saldo(saldo,monto,comision): 
+          total = monto + (monto * comision)
+    if self.validar_saldo_suficiente(monto, comision):
+        self.__saldo -= total_costo
+        self.agregar_a_historial(f"Se descontó ${total} del saldo para una inversión de ${monto}.")
+        return self.__saldo 
+    else:
+        raise ValueError("Saldo insuficiente para realizar la inversión.")
+
+
     def obtener_rendimiento(self):
         return self.__rendimiento
+
+    def verificar_acciones(self,cantidad): 
+        if self.__acciones >= cantidad: 
+           return True
+        else: 
+            raise ValueError("No tienes la cantidad necesaria para realizar la compra")
