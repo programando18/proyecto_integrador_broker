@@ -17,7 +17,7 @@ stream_handler.setFormatter(formatter)
 logger.addHandler(stream_handler)
 
 
-def connection_mysql():
+def __connection_mysql():
     try: 
         conn = mysql.connector.connect(
             user='root', 

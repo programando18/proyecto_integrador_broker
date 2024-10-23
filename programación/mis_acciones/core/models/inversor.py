@@ -16,7 +16,7 @@ class Inversor:
 
     def obtener_tipo_inversor(self): 
         return self.__tipo_inversor 
-
+    
     def agregar_a_historial(self, actividad):
         return self.__historial.append(actividad)
 
