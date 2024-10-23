@@ -63,12 +63,12 @@ def registrar_inversor():
             print("Error: La respuesta no puede estar vacía.")
 
     inversor = {
-        "CUIT": cuit,
-        "Nombre": nombre,
-        "Apellido": apellido,
-        "Email": email,
-        "Contraseña": contraseña,
-        "Pregunta Secreta": pregunta_secreta,
-        "Respuesta Secreta": respuesta_secreta,
+        "cuit": cuit,
+        "nombre": nombre,
+        "apellido": apellido,
+        "email": email,
+        "contraseña": contraseña,
+        "pregunta_secreta": pregunta_secreta,
+        "respuesta_secreta": respuesta_secreta,
     }
     return inversor

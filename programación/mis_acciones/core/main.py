@@ -2,6 +2,8 @@ from interfaces.bienvenida import bienvenida
 from interfaces.panel_de_control import panel_de_control
 from forms.login import formulario_login
 from forms.register import registrar_inversor
+from models.inversor import Inversor
+from DAO.inversor_DAO import InversorDAO
 from forms.recover import recuperar_contraseña, ingresar_cuit
 from utils.validaciones import validar_contraseña, validar_email
 
@@ -28,17 +30,30 @@ def main():
             # Si todo va bien, traemos los datos de la BBDD
             # y creamos una instancia de Inversor:
 
-            # DATOS FALSOS POR AHORA
-            usuario = {
+            datos_usuario = {
+                # Datos de contacto
                 "nombre": "Christian",
                 "apellido": "Caracach",
                 "dni": "123123",
                 "telefono": "123123",
-                "total_invertido": "0",
-                "rendimiento": "0",
-                "saldo": "0",
+                # Datos de inversor
+                "total_invertido": 0,
+                "rendimiento": 0,
+                "saldo": 0,
                 "acciones": ("AAPL", "TSLA", "AMZN"),
             }
+
+            # Creamos una instancia de Inversor con los datos obtenidos
+            usuario = Inversor(
+                nombre=datos_usuario["nombre"],
+                apellido=datos_usuario["apellido"],
+                dni=datos_usuario["dni"],
+                telefono=datos_usuario["telefono"],
+                total_invertido=datos_usuario["total_invertido"],
+                rendimiento=datos_usuario["rendimiento"],
+                saldo=datos_usuario["saldo"],
+                acciones=datos_usuario["acciones"],
+            )
             panel_de_control(usuario)  # Acá mandaríamos la instancia
 
             opcion = bienvenida()
@@ -65,8 +80,17 @@ def main():
 
             # Acá nos conectamos con la BBDD y registramos al usuario
             # ------------------------------------------------|
-            #
-            #
+            inversor_dao = InversorDAO()
+            inversor_dao.registrar_inversor(
+                inversor["cuit"],
+                inversor["nombre"],
+                inversor["apellido"],
+                inversor["email"],
+                inversor["contraseña"],
+                inversor["pregunta_secreta"],
+                inversor["respuesta_secreta"],
+            )
+
             # -------------------------------------------------|
 
             # Si todo va bien hacemos
