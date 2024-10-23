@@ -46,13 +46,6 @@ CREATE TABLE historico_cotizaciones (
     id_accion INT NOT NULL
 );
 
-CREATE TABLE portafolio (
-    id_portafolio INT PRIMARY KEY AUTO_INCREMENT,
-    id_inversor INT,
-    rendimiento FLOAT,
-    total_invertido FLOAT,
-    saldo FLOAT
-);
 
 CREATE TABLE transaccion (
     id_transaccion INT PRIMARY KEY AUTO_INCREMENT,
@@ -63,7 +56,14 @@ CREATE TABLE transaccion (
     comisión FLOAT NOT NULL
 );
 
-   
+   CREATE TABLE portafolio (
+    id_portafolio INT PRIMARY KEY AUTO_INCREMENT,
+    id_inversor INT,
+    total_invertido FLOAT,
+    saldo FLOAT,
+    id_accion INT NOT NULL
+);
+
 
 -CREAR LAS FK, QUE CONCUERDEN CON EL MODELO RELACIONAL 
 ALTER TABLE inversor
