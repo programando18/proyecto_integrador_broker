@@ -1,4 +1,4 @@
-def panel_de_acciones():
+def panel_de_compra_acciones():
     # Acá vamos a obtener las acciones disponibles de la BBDD
     # ------------------------------------------------|
     #
