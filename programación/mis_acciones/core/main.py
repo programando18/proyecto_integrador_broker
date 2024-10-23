@@ -4,7 +4,6 @@ from forms.login import formulario_login
 from forms.register import registrar_inversor
 from forms.recover import recuperar_contraseña, ingresar_cuit
 from utils.validaciones import validar_contraseña, validar_email
-from models.inversor import Inversor
 
 
 def main():
