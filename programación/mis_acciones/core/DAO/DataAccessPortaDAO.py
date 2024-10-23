@@ -1,7 +1,7 @@
 from abc import ABC,abstractmethod
 
 
-class DataAccessDAO(ABC): 
+class DataAccessPortaDAO(ABC): 
  
     @abstractmethod  
     def get(self,id:int):
