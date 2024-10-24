@@ -7,14 +7,16 @@ from models.portafolio import Portafolio
 from DAO.inversor_DAO import InversorDAO
 from forms.recover import recuperar_contraseña, ingresar_cuit
 from utils.validaciones import validar_contraseña, validar_email
+from DAO.bd_connection import connection_mysql
 
 
 def main():
+    connection_mysql()
     opcion = bienvenida()
 
     inversor_dao = InversorDAO()
 
-    while opcion <= "4":
+    while True:
         if opcion == "1":
             datos_login = formulario_login()
 
