@@ -4,7 +4,7 @@ import mysql.connector
 import logging
 from mysql.connector import errorcode
 from portafolio_DAO import portafolio
-from programación.mis_acciones.core.DAO import DataAccessDAO
+from programación.mis_acciones.core.DAO import data_access_dao
 from programación.mis_acciones.core.models import accion, portafolio
 
 
