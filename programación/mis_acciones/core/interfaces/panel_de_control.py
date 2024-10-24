@@ -74,4 +74,4 @@ def panel_de_control(usuario):
         elif opcion == "3":
             break
         else:
-            print("Opción inválida")
+           raise("Opción inválida")

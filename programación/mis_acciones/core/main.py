@@ -26,7 +26,7 @@ def main():
             # -------------------------------------------------|
 
             # Si todo va bien, traemos los datos de la BBDD
-            # y creamos una instancia de Inversor:
+            # y creamos una instancia de Inversor:  
 
             # DATOS FALSOS POR AHORA
             usuario = {

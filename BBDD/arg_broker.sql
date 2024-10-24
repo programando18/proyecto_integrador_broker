@@ -14,7 +14,6 @@ CREATE TABLE inversor (
     fecha_alta DATE,
     pregunta VARCHAR(100), 
     respuesta VARCHAR(100),
-    
 );
 
 CREATE TABLE tipo_contacto (
