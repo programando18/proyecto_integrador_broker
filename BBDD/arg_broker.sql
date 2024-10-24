@@ -33,6 +33,7 @@ CREATE TABLE acción (
     simbolo_accion VARCHAR(10) NOT NULL,
     nombre_accion VARCHAR(100) NOT NULL,
     precio_compra_actual  FLOAT NOT NULL,
+    cantidad INT NOT NULL,
     precio_venta_actual FLOAT NOT NULL
 );
 

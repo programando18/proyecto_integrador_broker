@@ -4,26 +4,34 @@ from models.tipo_inversor import Tipo_Inversor
 class Inversor:
     def __init__(
         self,
+        cuit="",
         nombre="",
         apellido="",
+        email="",
+        contraseña="",
+        pregunta_secreta="",
+        respuesta_secreta="",
         tipo_inversor="",
-        total_invertido=0.0,
-        rendimiento=0.0,
-        saldo=0.0,
+        total_invertido="",
+        rendimiento="",
+        saldo="",
         acciones=(),
     ):
-        self.__nombre = nombre
-        self.__apellido = apellido
-        self.__tipo_inversor = (
-            tipo_inversor if tipo_inversor is not None else Tipo_Inversor()
-        )
-        self.__total_invertido = total_invertido
-        self.__rendimiento = rendimiento
-        self.__saldo = saldo
-        self.__acciones = acciones
-        self.__historial = []
-        self.__monto = 0
-        self.__tasa_interes = 0
+        self.cuit = cuit
+        self.nombre = nombre
+        self.apellido = apellido
+        self.email = email
+        self.contraseña = contraseña
+        self.pregunta_secreta = pregunta_secreta
+        self.respuesta_secreta = respuesta_secreta
+        self.tipo_inversor = tipo_inversor
+        self.total_invertido = total_invertido
+        self.rendimiento = rendimiento
+        self.saldo = saldo
+        self.acciones = acciones
+        self.historial = []
+        self.monto = 0
+        self.tasa_interes = 0
 
     def obtener_tipo_inversor(self):
         return self.__tipo_inversor
