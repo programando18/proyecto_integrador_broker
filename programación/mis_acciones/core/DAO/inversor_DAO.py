@@ -1,5 +1,5 @@
 import mysql.connector
-from DAO.DataAccessDAO import DataAccessDAO
+import json
 from models.inversor import Inversor
 
 
@@ -29,11 +29,15 @@ class InversorDAO:
 
     def registrar_inversor(self, inversor: Inversor) -> Inversor:
         query = """
-        INSERT INTO inversor (cuit, nombre, apellido, email, contraseña, pregunta_secreta, respuesta_secreta)
+        INSERT INTO inversores (cuit, nombre, apellido, email, contraseña, pregunta_secreta, respuesta_secreta)
         VALUES (%s, %s, %s, %s, %s, %s, %s)
         """
 
-        # Manejo de la conexión a la base de datos
+        portfolio_query = """
+        INSERT INTO portafolios (id_inversor, total_invertido, saldo, acciones) 
+        VALUES (%s, %s, %s, %s)
+        """
+
         with self.__connect_to_mysql() as conn:
             try:
                 cursor = conn.cursor()
@@ -52,6 +56,18 @@ class InversorDAO:
                     ),
                 )
                 conn.commit()
+
+                id_inversor = cursor.lastrowid
+                print(id_inversor)
+
+                acciones_json = json.dumps({})
+
+                cursor.execute(
+                    portfolio_query, (id_inversor, 0.0, 1000000.0, acciones_json)
+                )
+
+                conn.commit()
+
                 if cursor.rowcount > 0:
                     print("Inversor registrado exitosamente.")
                     return inversor

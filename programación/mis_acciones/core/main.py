@@ -3,6 +3,7 @@ from interfaces.panel_de_control import panel_de_control
 from forms.login import formulario_login
 from forms.register import registrar_inversor
 from models.inversor import Inversor
+from models.portafolio import Portafolio
 from DAO.inversor_DAO import InversorDAO
 from forms.recover import recuperar_contraseña, ingresar_cuit
 from utils.validaciones import validar_contraseña, validar_email
@@ -55,7 +56,17 @@ def main():
                 saldo=datos_usuario["saldo"],
                 acciones=datos_usuario["acciones"],
             )
-            panel_de_control(datos_usuario)  # Acá mandaríamos la instancia
+
+            # ACA hay que usar el id_inversor para obtener el portafolio
+
+            # -------------------------------------------
+            #
+            #
+            # ---------------------------------------------
+
+            portafolio = Portafolio()
+
+            panel_de_control(datos_usuario, datos_portafolio)
 
             opcion = bienvenida()
         elif opcion == "2":

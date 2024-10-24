@@ -16,8 +16,8 @@ CREATE TABLE inversores (
 
 CREATE TABLE acciones (
     id_accion INT PRIMARY KEY AUTO_INCREMENT,
-    simbolo_accion VARCHAR(10) NOT NULL,
-    nombre_accion VARCHAR(100) NOT NULL,
+    simbolo VARCHAR(10) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
     precio_compra_actual  FLOAT NOT NULL,
     precio_venta_actual FLOAT NOT NULL,
     cantidad INT NOT NULL
