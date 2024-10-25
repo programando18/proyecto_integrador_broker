@@ -7,23 +7,24 @@ CREATE TABLE inversor (
     cuit VARCHAR(11) NOT NULL,  
     nombre VARCHAR(50) NOT NULL,
     apellido VARCHAR(50) NOT NULL,
-    email VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
     telefono VARCHAR(20),
-    descripcion_inversor VARCHAR(100) ,
     contraseña VARCHAR(100) NOT NULL,
     saldo FLOAT DEFAULT 0,  
     fecha_alta DATE,
-    pregunta VARCHAR(100), 
-    respuesta VARCHAR(100),
+    pregunta_secreta VARCHAR(100), 
+    respuesta_secreta VARCHAR(100)
+   
+);   
     
-);
 
-
+   
 CREATE TABLE acción (
     id_accion INT PRIMARY KEY AUTO_INCREMENT,
     simbolo_accion VARCHAR(10) NOT NULL,
     nombre_accion VARCHAR(100) NOT NULL,
     precio_compra_actual  FLOAT NOT NULL,
+    cantidad INT NOT NULL,
     precio_venta_actual FLOAT NOT NULL
 );
 

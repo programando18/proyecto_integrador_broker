@@ -1,21 +1,40 @@
+from models.tipo_inversor import Tipo_Inversor
 
-from tipo_inversor import Tipo_Inversor
 
 class Inversor:
-    def __init__(self, nombre, apellido,tipo_inversor,  total_invertido, rendimiento, saldo, acciones):
-        self.__nombre = nombre
-        self.__apellido = apellido
-        self.__tipo_inversor = tipo_inversor
-        self.__total_invertido = total_invertido
-        self.__rendimiento = rendimiento
-        self.__saldo = saldo
-        self.__acciones = acciones
-        self.__historial = []
-        self.__monto = 0
-        self.__tasa_interes = 0 
+    def __init__(
+        self,
+        cuit="",
+        nombre="",
+        apellido="",
+        email="",
+        contraseña="",
+        pregunta_secreta="",
+        respuesta_secreta="",
+        tipo_inversor="",
+        total_invertido="",
+        rendimiento="",
+        saldo="",
+        acciones=(),
+    ):
+        self.cuit = cuit
+        self.nombre = nombre
+        self.apellido = apellido
+        self.email = email
+        self.contraseña = contraseña
+        self.pregunta_secreta = pregunta_secreta
+        self.respuesta_secreta = respuesta_secreta
+        self.tipo_inversor = tipo_inversor
+        self.total_invertido = total_invertido
+        self.rendimiento = rendimiento
+        self.saldo = saldo
+        self.acciones = acciones
+        self.historial = []
+        self.monto = 0
+        self.tasa_interes = 0
 
-    def obtener_tipo_inversor(self): 
-        return self.__tipo_inversor 
+    def obtener_tipo_inversor(self):
+        return self.__tipo_inversor
 
     def agregar_a_historial(self, actividad):
         return self.__historial.append(actividad)
@@ -41,15 +60,12 @@ class Inversor:
         else:
             raise ValueError("El valor de la tasa de interes debe ser mayor a 0")
 
-
-    def validar_saldo(saldo,monto,comision): 
+    def validar_saldo(saldo, monto, comision):
         total = monto + (monto * comision)
-        if saldo >= monto: 
+        if saldo >= monto:
             return True
-        else: 
+        else:
             return False
-   
-
     def descontar_saldo(saldo,monto,comision): 
         total = monto + (monto * comision)
         if self.validar_saldo_suficiente(monto, comision):
@@ -59,12 +75,21 @@ class Inversor:
         else:
           raise ValueError("Saldo insuficiente para realizar la inversión.")
 
+   
+        if self.validar_saldo_suficiente(monto, comision):
+            self.__saldo -= total_costo
+            self.agregar_a_historial(
+                f"Se descontó ${total} del saldo para una inversión de ${monto}."
+            )
+            # return self.__saldo
+        else:
+            raise ValueError("Saldo insuficiente para realizar la inversión.")
 
     def obtener_rendimiento(self):
         return self.__rendimiento
 
-    def verificar_acciones(self,cantidad): 
-        if self.__acciones >= cantidad: 
-           return True
-        else: 
+    def verificar_acciones(self, cantidad):
+        if self.__acciones >= cantidad:
+            return True
+        else:
             raise ValueError("No tienes la cantidad necesaria para realizar la compra")
