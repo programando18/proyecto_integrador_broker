@@ -40,6 +40,6 @@ def connection_mysql():
             logger.error(f"Error desconocido: {err}")
     return None
 
-
+conn = connection_mysql()
 
 

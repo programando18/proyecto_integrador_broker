@@ -1,5 +1,5 @@
 from models.tipo_inversor import Tipo_Inversor
-
+from programación.mis_acciones.core.DAO.inversor_DAO import InversorDAO
 
 class Inversor:
     def __init__(
