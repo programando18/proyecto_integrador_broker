@@ -1,7 +1,3 @@
-
-
-
-
 import mysql.connector
 import json
 
@@ -18,7 +14,7 @@ class InversorDAO:
         return self.execute_query(query, (id_inversor,))
 
     def registrar_inversor(inversor: Inversor) -> Inversor:
-        # 1. Conectarse a la base de datos  
+        # 1. Conectarse a la base de datos
         conn = connection_mysql()
 
         if conn is None:
@@ -76,30 +72,20 @@ class InversorDAO:
                 print(f"Error al registrar el inversor: {err}")
                 return None
 
-        except Exception as e:
-            logging.error(f"Error al registrar el inversor: {e}")
-            return None
-        finally:
-            conn.close()
-
-
-
-# hacer hoy
+    # hacer hoy
     def get_inversor_by_email(self, email):
         print("Buscando inversor por email")
 
-
-#hacer hoy
+    # hacer hoy
     def get_inversor_by_email_and_password(self, email, password):
         print("Buscando inversor por email y password")
 
- #hacer hoy: 
-    def comparar_password(self): 
+    # hacer hoy:
+    def comparar_password(self):
         return ""
-
 
     def comprar_accion(self, id_inversor, id_accion):
         print("")
- 
+
     def vender_accion(self, id_inversor, id_accion):
         print("")
