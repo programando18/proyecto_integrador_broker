@@ -50,6 +50,7 @@ class Inversor:
     def obtener_saldo(self):
         return self.__saldo
 
+#verififcar si esat bien? 
     def calcular_rendimiento(self, precio_venta):
         """Calcula el rendimiento basado en basado en  el precio
 de compra con el precio de cotización actual."""
