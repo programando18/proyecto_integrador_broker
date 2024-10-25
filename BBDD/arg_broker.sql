@@ -12,9 +12,7 @@ CREATE TABLE inversores (
     fecha_alta DATE,
     pregunta_secreta VARCHAR(100), 
     respuesta_secreta VARCHAR(100)
-   
 );   
-    
 
    
 CREATE TABLE acción (
