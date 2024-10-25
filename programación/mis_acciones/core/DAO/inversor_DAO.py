@@ -1,27 +1,13 @@
 import mysql.connector
 import json
+
 from models.inversor import Inversor
+from DAO.bd_connection import connection_mysql
 
 
 class InversorDAO:
     def __init__(self):
         super().__init__()
-
-    def __connect_to_mysql(self):
-        try:
-            return mysql.connector.connect(
-                host="localhost",
-                user="root",
-                password="ch35578113",
-                database="arg_broker",
-            )
-        except mysql.connector.Error as err:
-            if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-                raise ("Usuario o Password no válido")
-            elif err.errno == errorcode.ER_BAD_DB_ERROR:
-                raise ("La base de datos no existe.")
-            else:
-                raise (err)
 
     def get_inversor(self, id_inversor):
         query = "SELECT * FROM inversor WHERE id_inversor = %s"
@@ -38,11 +24,10 @@ class InversorDAO:
         VALUES (%s, %s, %s, %s)
         """
 
-        with self.__connect_to_mysql() as conn:
+        with connection_mysql() as conn:
             try:
                 cursor = conn.cursor()
 
-                # Ejecutar la consulta usando los atributos del objeto Inversor
                 cursor.execute(
                     query,
                     (
