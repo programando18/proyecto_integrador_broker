@@ -6,17 +6,18 @@ CREATE TABLE inversores (
     cuit VARCHAR(11) NOT NULL,  
     nombre VARCHAR(50) NOT NULL,
     apellido VARCHAR(50) NOT NULL,
+    telefono VARCHAR(20),
     contraseña VARCHAR(100) NOT NULL,
     saldo FLOAT DEFAULT 0,  
-    id_contacto INT,
-    id_tipo_inversor INT,
     fecha_alta DATE,
-    pregunta VARCHAR(100), 
-    respuesta VARCHAR(100),
+    pregunta_secreta VARCHAR(100), 
+    respuesta_secreta VARCHAR(100)
+   
+);   
     
-);
 
-CREATE TABLE acciones (
+   
+CREATE TABLE acción (
     id_accion INT PRIMARY KEY AUTO_INCREMENT,
     simbolo VARCHAR(10) NOT NULL,
     nombre VARCHAR(100) NOT NULL,

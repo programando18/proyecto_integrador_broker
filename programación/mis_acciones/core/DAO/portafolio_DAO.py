@@ -1,29 +1,49 @@
+
+
 import mysql.connector
 from mysql.connector import errorcode
-from models.portafolio import Portafolio
+from portafolio_DAO import portafolio
+from programación.mis_acciones.core.DAO import data_access_dao
+from programación.mis_acciones.core.models import accion, portafolio
 
 
-class PortafolioDao:
+class PortafolioDao(data_access_dao.DataAccessDAO):
 
-    def __connect_to_mysql(self):
+  def get(self,id_portafolio:int)->object:
+     
+       with self.connection_mysql() as connect:
+     
         try:
-            return mysql.connector.connect(
-                host="localhost",
-                user="root",
-                password="ch35578113",
-                database="arg_broker",
-            )
+            cursor = connect.cursor()
+            query= "SELECT saldo, total_invertido, id_accion FROM Portafolio  WHERE id_portafolio=%s "
+            cursor.execute(query,(id,))  
+            row = cursor.fetchone()   
+               
+            
+            if row:
+                return object(row[0],row[1],row[2],row[3]) 
+            return None
         except mysql.connector.Error as err:
-            if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-                raise ("Usuario o Password no válido")
-            elif err.errno == errorcode.ER_BAD_DB_ERROR:
-                raise ("La base de datos no existe.")
-            else:
-                raise (err)
+                   raise err   
+               
+  def Update(self,portafolio:portafolio):
+      
+       with self.connection_mysql() as connect:
+            
+        try:
+             cursor= connect.cursor()
+             query="UPDATE Portafolio SET totalInvertido=%s, saldo=%s, acciones=%s"
+             cursor.execute(query,(portafolio.totalInvertido,portafolio.saldo,portafolio.acciones))
+             connect.commit()
+              
+        except mysql.connector.Error as err:
+                   raise err                
+               
+  def get_all(self,id_portafolio:int)->list:            
+        with self.connection_mysql() as connect:
+            
+         try:
 
-    def get_portafolio(self, id_inversor: int) -> Portafolio:
-        with self.__connect_to_mysql() as connect:
-            try:
                 cursor = connect.cursor()
                 query = "SELECT * FROM portafolios WHERE id_inversor = %s"
                 cursor.execute(query, (id_inversor))
