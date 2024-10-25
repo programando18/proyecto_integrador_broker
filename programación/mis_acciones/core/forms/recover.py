@@ -1,14 +1,15 @@
-from utils.validaciones import validar_cuit, validar_respuesta
+import email
+from utils.validaciones import validar_cuit, validar_email, validar_respuesta
 
 
-def ingresar_cuit():
+def ingresar_email():
     while True:
-        cuit = input("Ingrese por favor su CUIT: ")
-        if validar_cuit(cuit):
+        email = input("Ingrese por favor su email: ")
+        if validar_email(email):
             break
         else:
-            print("Error: El CUIT debe tener 11 dígitos numéricos.")
-    return cuit
+            print("Error: el mail debe tener el formato info@proveedor.com")
+    return email
 
 
 def recuperar_contraseña(inversor):

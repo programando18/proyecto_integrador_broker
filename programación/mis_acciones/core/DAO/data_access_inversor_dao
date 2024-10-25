@@ -1,13 +1,17 @@
+
 from abc import ABC,abstractmethod
+import string
+from tokenize import String
 
 
-class DataAccessDAO(ABC): 
+
+class DataAccessInversorDAO(ABC): 
  
     @abstractmethod  
     def get(self,id:int):
          pass
     @abstractmethod  
-    def get_all(self,id:int):
+    def get_all(self,id:string):
          pass
     @abstractmethod  
     def create(self,id:int):

@@ -7,26 +7,17 @@ CREATE TABLE inversor (
     cuit VARCHAR(11) NOT NULL,  
     nombre VARCHAR(50) NOT NULL,
     apellido VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    telefono VARCHAR(20),
+    descripcion_inversor VARCHAR(100) ,
     contraseña VARCHAR(100) NOT NULL,
     saldo FLOAT DEFAULT 0,  
-    id_contacto INT,
-    id_tipo_inversor INT,
     fecha_alta DATE,
     pregunta VARCHAR(100), 
     respuesta VARCHAR(100),
     
 );
 
-CREATE TABLE tipo_contacto (
-    id_contacto INT PRIMARY KEY AUTO_INCREMENT,
-    telefono VARCHAR(20),
-    email VARCHAR(100) NOT NULL
-);
-
-CREATE TABLE tipo_inversor (
-    id_tipo_inversor INT PRIMARY KEY AUTO_INCREMENT,
-    descripcion_inversor VARCHAR(100) NOT NULL
-);
 
 CREATE TABLE acción (
     id_accion INT PRIMARY KEY AUTO_INCREMENT,
