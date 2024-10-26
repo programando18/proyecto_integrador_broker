@@ -68,14 +68,10 @@ def main():
 
             opcion = bienvenida()
         elif opcion == "2":
-            cuit = ingresar_cuit()
+            email = ingresar_email()
 
-            # Acá nos conectamos con la BBDD y buscamos al usuario
-            # ------------------------------------------------|
-            #
-            #
-            # -------------------------------------------------|
-
+            # Acá nos conectamos con la BBDD y buscamos al inversor
+            # inversor_dao.get_inversor(id_inversor)
             # Si el usuario existe, llenar ésto con su pregunta secreta, respuesta secreta y contraseña
             usuario = {
                 "Pregunta Secreta": "¿Cuál es tu color favorito?",
@@ -83,7 +79,7 @@ def main():
                 "Contraseña": "123456",
             }
             # Si todo va bien hacemos
-            recuperar_contraseña(usuario)
+            recuperar_contraseña(inversor)
 
             opcion = bienvenida()
         elif opcion == "3":
