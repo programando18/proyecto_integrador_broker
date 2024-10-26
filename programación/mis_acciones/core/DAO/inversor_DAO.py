@@ -11,10 +11,6 @@ class InversorDAO:
 
     def registrar_inversor(self, inversor: Inversor) -> Inversor:
 
-        if conn is None:
-            logging.info("No se pudo establecer la conexión con la base de datos.")
-            return None
-
         query = """
         INSERT INTO inversores (cuit, nombre, apellido, email, contraseña, pregunta_secreta, respuesta_secreta)
         VALUES (%s, %s, %s, %s, %s, %s, %s)
@@ -26,6 +22,10 @@ class InversorDAO:
         """
 
         with connection_mysql() as conn:
+
+            if conn is None:
+                logging.info("No se pudo establecer la conexión con la base de datos.")
+                return None
             try:
                 cursor = conn.cursor()
 
@@ -65,21 +65,21 @@ class InversorDAO:
                 return None
 
     def obtener_inversor_por_email(self, email):
-        conn = connection_mysql()
-
-        if conn is None:
-            logging.info("No se pudo establecer la conexión con la base de datos.")
-            return None
-
         query = "SELECT * FROM inversores WHERE email = %s"
-        try:
-            cursor = conn.cursor(dictionary=True)
-            cursor.execute(query, (email,))
-            result = cursor.fetchone()
-            if result:
-                return result
-            else:
+
+        with connection_mysql() as conn:
+            if conn is None:
+                logging.info("No se pudo establecer la conexión con la base de datos.")
                 return None
-        except mysql.connector.Error as err:
-            print(f"Error al obtener el inversor: {err}")
-            return None
+
+            try:
+                cursor = conn.cursor(dictionary=True)
+                cursor.execute(query, (email,))
+                result = cursor.fetchone()
+                if result:
+                    return result
+                else:
+                    return None
+            except mysql.connector.Error as err:
+                print(f"Error al obtener el inversor: {err}")
+                return None
