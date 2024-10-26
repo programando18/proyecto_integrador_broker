@@ -54,6 +54,55 @@ class PortafolioDAO:
                 print(f"Error al agregar la acción: {err}")
                 return False
 
+    def descontar_accion(self, id_inversor: int, simbolo: str, cantidad: int) -> bool:
+
+        query_select = """
+            SELECT JSON_EXTRACT(acciones, '$') AS acciones 
+            FROM portafolios 
+            WHERE id_portafolio = %s
+        """
+
+        query_update = """
+            UPDATE portafolios 
+            SET acciones = %s 
+            WHERE id_portafolio = %s
+        """
+
+        with connection_mysql() as conn:
+
+            try:
+                cursor = conn.cursor(dictionary=True)
+                cursor.execute(query_select, (id_inversor,))
+                row = cursor.fetchone()
+                if row and row["acciones"]:
+                    acciones = json.loads(row["acciones"])
+                    for accion in acciones:
+                        if accion["simbolo"] == simbolo:
+                            if accion["cantidad"] >= cantidad:
+                                accion["cantidad"] -= cantidad
+                                if accion["cantidad"] == 0:
+                                    acciones.remove(accion)
+                                break
+                            else:
+                                print(
+                                    "Cantidad insuficiente de acciones para descontar"
+                                )
+                                return False
+                    else:
+                        print("Acción no encontrada en el portafolio")
+                        return False
+
+                    acciones_json = json.dumps(acciones)
+                    cursor.execute(query_update, (acciones_json, id_inversor))
+                    conn.commit()
+                    return True
+                else:
+                    print("Portafolio no encontrado o sin acciones")
+                    return False
+            except mysql.connector.Error as err:
+                print(f"Error al descontar la acción: {err}")
+                return False
+
     def descontar_saldo(self, id_inversor: int, monto: float) -> bool:
 
         query = """
@@ -71,4 +120,23 @@ class PortafolioDAO:
                 return True
             except mysql.connector.Error as err:
                 print(f"Error al descontar el saldo: {err}")
+                return False
+
+    def aumentar_saldo(self, id_inversor: int, monto: float) -> bool:
+
+        query = """
+                UPDATE portafolios 
+                SET saldo = saldo + %s 
+                WHERE id_inversor = %s
+            """
+
+        with connection_mysql() as conn:
+
+            try:
+                cursor = conn.cursor()
+                cursor.execute(query, (monto, id_inversor))
+                conn.commit()
+                return True
+            except mysql.connector.Error as err:
+                print(f"Error al aumentar el saldo: {err}")
                 return False

@@ -54,7 +54,6 @@ def panel_de_control(usuario, portafolio):
             accion = seleccion["accion"]
             cantidad = seleccion["cantidad"]
 
-            print(accion)
             if saldo_es_suficiente(portafolio.saldo, accion, cantidad):
                 portafolio_DAO.agregar_accion(
                     portafolio.id_inversor,
@@ -68,22 +67,25 @@ def panel_de_control(usuario, portafolio):
                 portafolio_DAO.descontar_saldo(
                     portafolio.id_inversor, accion["precio_compra_actual"] * cantidad
                 )
-                print("Acción comprada con éxito")
-                print(portafolio)
+                print("Acción comprada con éxito")  # TODO mejorar interfaz
             else:
                 print("Saldo insuficiente")
 
             opcion = input("¿Deseas hacer algo más? (s/n): ")
         elif opcion == "2":
-            accion = panel_de_venta_acciones()
+            seleccion = panel_de_venta_acciones(json.loads(portafolio.acciones))
+            acccion = seleccion["accion"]
+            cantidad = seleccion["cantidad"]
 
-            # Acá nos conectamos con la BBDD y procesamos la venta
-            # ------------------------------------------------|
-            #
-            #
-            # -------------------------------------------------|
+            if accion:
+                precio = acciones_DAO.obtener_precio_accion(accion["simbolo"])
 
-            print(accion)
+                portafolio_DAO.descontar_accion(
+                    portafolio.id_inversor, accion["simbolo"], cantidad
+                )
+                acciones_DAO.agregar_acciones(accion["simbolo"], cantidad)
+                portafolio_DAO.aumentar_saldo(portafolio.id_inversor, precio * cantidad)
+                print("Acción vendida con éxito")
 
             opcion = input("¿Deseas hacer algo más? (s/n): ")
         elif opcion == "3":
