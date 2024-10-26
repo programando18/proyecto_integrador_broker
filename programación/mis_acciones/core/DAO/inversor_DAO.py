@@ -2,14 +2,14 @@ import mysql.connector
 import json
 import logging
 
-from mis_acciones.core.models.inversor import Inversor
+from core.models.inversor import Inversor
 from DAO.bd_connection import connection_mysql   
 
 
 
 class InversorDAO:
     def __init__(self):
-        # super().__init__()
+        super().__init__()
         
         def get_inversor(self, id_inversor):
             query = "SELECT * FROM inversor WHERE id_inversor = %s"
