@@ -1,2 +1,8 @@
-development_merge.sh
-do_backup.sh
+# Archivos de caché de Python
+__pycache__/
+*.py[cod]
+
+# Configuración de entornos virtuales
+venv/
+env/
+*.env
