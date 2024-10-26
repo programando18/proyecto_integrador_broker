@@ -1,37 +1,28 @@
 from interfaces.panel_de_compra_acciones import panel_de_compra_acciones
 from interfaces.panel_de_venta_acciones import panel_de_venta_acciones
+from DAO.acciones_DAO import AccionesDAO
+
+acciones_DAO = AccionesDAO()
 
 
-def panel_de_control(usuario):
+def panel_de_control(usuario, portafolio):
+    print(portafolio)
     print("   -------------------------------------   ")
     print("              MIS ACCIONES                 ")
     print("   -------------------------------------   ")
-    if len(usuario["nombre"]) > 29:
-        print(f"    Usuario: {usuario['nombre'][:26]}")
-    else:
-        print(f"    Usuario: {usuario['nombre']}")
-    if len(usuario["apellido"]) > 29:
-        print(f"    Apellido: {usuario['apellido'][:26]}")
-    else:
-        print(f"    Apellido: {usuario['apellido']}")
-    if len(usuario["total_invertido"]) > 29:
-        print(f"    Total invertido: {usuario['total_invertido'][:17]}")
-    else:
-        print(f"    Total invertido: {usuario['total_invertido']}")
-    if len(usuario["rendimiento"]) > 29:
-        print(f"    Rendimiento: {usuario['rendimiento'][:23]}")
-    else:
-        print(f"    Rendimiento: {usuario['rendimiento']}")
-    if len(usuario["saldo"]) > 29:
-        print(f"    Saldo: {usuario['saldo'][:23]}")
-    else:
-        print(f"    Saldo: {usuario['saldo']}")
+    print(f"    Usuario: {usuario['nombre']}")
+    print(f"    Apellido: {usuario['apellido']}")
+    print(f"    Total invertido: {portafolio['total_invertido']}")
+    # print(f"    Rendimiento: {portafolio.obtener_rendimiento()}")
+    print(f"    Saldo: {portafolio['saldo']}")
     print("   -------------------------------------   ")
     print("    LISTA DE ACTIVOS/TENENCIAS (simple)    ")
     print("   -------------------------------------   ")
 
-    for i, accion in enumerate(usuario["acciones"], start=1):
-        print(f"    {i}. {accion}")
+    for i, accion in enumerate(portafolio["acciones"], start=1):
+        print(
+            f"    {i}. {accion['simbolo']} - {accion['nombre']} - Cantidad: {accion['cantidad']}"
+        )
     print(" ")
     print(" ")
     print("   -------------------------------------   ")

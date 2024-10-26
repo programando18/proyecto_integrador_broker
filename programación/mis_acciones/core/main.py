@@ -3,17 +3,20 @@ from interfaces.panel_de_control import panel_de_control
 from forms.login import formulario_login
 from forms.register import registrar_inversor
 from models.inversor import Inversor
+from models.portafolio import Portafolio
 from DAO.inversor_DAO import InversorDAO
-from forms.recover import recuperar_contraseña, ingresar_cuit
+from forms.recover import ingresar_email, recuperar_contraseña
 from utils.validaciones import validar_contraseña, validar_email
+from DAO.bd_connection import connection_mysql
 
 
 def main():
+    connection_mysql()
     opcion = bienvenida()
 
     inversor_dao = InversorDAO()
 
-    while opcion <= "4":
+    while True:
         if opcion == "1":
             datos_login = formulario_login()
 
@@ -35,7 +38,7 @@ def main():
             # -------------------------------------------------|
 
             # Si todo va bien, traemos los datos de la BBDD
-            # y creamos una instancia de Inversor:  
+            # y creamos una instancia de Inversor:
 
             # DATOS FALSOS POR AHORA
             usuario = {
@@ -57,18 +60,40 @@ def main():
                 saldo=datos_usuario["saldo"],
                 acciones=datos_usuario["acciones"],
             )
-            panel_de_control(datos_usuario)  # Acá mandaríamos la instancia
+
+            # ACA hay que usar el id_inversor para obtener el portafolio
+
+            # -------------------------------------------
+            #
+            #
+            # ---------------------------------------------
+
+            # Crear una instancia de Portafolio con datos ficticios
+            datos_portafolio = {
+                "id_portafolio": 1,
+                "total_invertido": 10000,
+                "saldo": 5000,
+                "acciones": [
+                    {"simbolo": "AAPL", "nombre": "Apple Inc.", "cantidad": 10},
+                    {"simbolo": "TSLA", "nombre": "Tesla Inc.", "cantidad": 5},
+                    {"simbolo": "AMZN", "nombre": "Amazon.com Inc.", "cantidad": 2},
+                ],
+            }
+
+            portafolio = Portafolio(
+                id_portafolio=datos_portafolio["id_portafolio"],
+                total_invertido=datos_portafolio["total_invertido"],
+                saldo=datos_portafolio["saldo"],
+                acciones=datos_portafolio["acciones"],
+            )
+
+            panel_de_control(datos_usuario, datos_portafolio)
 
             opcion = bienvenida()
         elif opcion == "2":
-            # Cambiar ésto, tiene que ser email
             cuit = ingresar_cuit()
 
             # Acá nos conectamos con la BBDD y buscamos al usuario
-            # ACA TENES QUE TRABAJAR EVE.
-            # TAREAS
-            # Pedirle al usuario que ingrese el email, no el CUIT.
-            # Crear método en InversorDAO para obtener un inversor por email.
             # ------------------------------------------------|
             #
             #
@@ -80,6 +105,7 @@ def main():
                 "Respuesta Secreta": "Rojo",
                 "Contraseña": "123456",
             }
+            # Si todo va bien hacemos
             recuperar_contraseña(usuario)
 
             opcion = bienvenida()
