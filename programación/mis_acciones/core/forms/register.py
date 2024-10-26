@@ -14,35 +14,35 @@ def registrar_inversor():
     print("---------- Registro de Inversor ----------")
 
     while True:
-        cuit = input("Ingrese por favor su CUIT: ")
+        cuit = input("Ingrese por favor su CUIT: ").strip()
         if validar_cuit(cuit):
             break
         else:
             print("Error: El CUIT debe tener 11 dígitos numéricos.")
 
     while True:
-        nombre = input("Ingrese su nombre: ")
+        nombre = input("Ingrese su nombre: ").strip()
         if validar_nombre(nombre):
             break
         else:
             print("Error: El nombre solo debe contener letras.")
 
     while True:
-        apellido = input("Ingrese su apellido: ")
+        apellido = input("Ingrese su apellido: ").strip()
         if validar_nombre(apellido):
             break
         else:
             print("Error: El apellido solo debe contener letras.")
 
     while True:
-        email = input("Ingrese su email: ")
+        email = input("Ingrese su email: ").strip()
         if validar_email(email):
             break
         else:
             print("Error: El correo electrónico no es válido.")
 
     while True:
-        contraseña = input("Elija una contraseña: ")
+        contraseña = input("Elija una contraseña: ").strip()
         if validar_contraseña(contraseña):
             break
         else:
@@ -56,7 +56,7 @@ def registrar_inversor():
             print("Error: La pregunta no puede estar vacía.")
 
     while True:
-        respuesta_secreta = input("Ingrese su respuesta secreta: ")
+        respuesta_secreta = input("Ingrese su respuesta secreta: ").strip()
         if validar_respuesta(respuesta_secreta):
             break
         else:

@@ -3,4 +3,4 @@ def formulario_login():
     email = input("Ingrese su correo electrónico: ")
     contraseña = input("Ingrese su contraseña: ")
     print("==========================")
-    return [email, contraseña]
+    return [email.strip(), contraseña.strip()]
