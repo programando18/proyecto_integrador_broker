@@ -52,6 +52,10 @@ CREATE TABLE portafolios (
     FOREIGN KEY (id_inversor) REFERENCES inversores(id_inversor)
 );
 
+-- UPDATE portafolios
+-- SET acciones = '[{"simbolo": "ABC", "nombre": "ABC Accion", "cantidad": 10}, {"simbolo": "XYZ","nombre": "XYZ accion", "cantidad": 5}]'
+-- WHERE id_inversor = 1;
+
 -- -CREAR LAS FK, QUE CONCUERDEN CON EL MODELO RELACIONAL 
 -- ALTER TABLE inversor
 -- ADD CONSTRAINT fk_id_contacto FOREIGN KEY (id_contacto) REFERENCES tipo_contacto(id_contacto);

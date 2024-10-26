@@ -1,6 +1,7 @@
 from interfaces.panel_de_compra_acciones import panel_de_compra_acciones
 from interfaces.panel_de_venta_acciones import panel_de_venta_acciones
 from DAO.acciones_DAO import AccionesDAO
+import json
 
 acciones_DAO = AccionesDAO()
 
@@ -9,19 +10,25 @@ def panel_de_control(usuario, portafolio):
     print("   -------------------------------------   ")
     print("              MIS ACCIONES                 ")
     print("   -------------------------------------   ")
-    print(f"    Usuario: {usuario['nombre']}")
-    print(f"    Apellido: {usuario['apellido']}")
-    print(f"    Total invertido: {portafolio['total_invertido']}")
+    print(f"    Usuario: {usuario.nombre}")
+    print(f"    Apellido: {usuario.apellido}")
+    print(f"    Total invertido: ${portafolio.total_invertido}")
     # print(f"    Rendimiento: {portafolio.obtener_rendimiento()}")
-    print(f"    Saldo: {portafolio['saldo']}")
+    print(f"    Saldo: ${portafolio.saldo}")
     print("   -------------------------------------   ")
     print("    LISTA DE ACTIVOS/TENENCIAS (simple)    ")
     print("   -------------------------------------   ")
 
-    for i, accion in enumerate(portafolio["acciones"], start=1):
-        print(
-            f"    {i}. {accion['simbolo']} - {accion['nombre']} - Cantidad: {accion['cantidad']}"
-        )
+    if not portafolio.acciones:
+        print("    No hay acciones")
+    else:
+        json_acciones = json.loads(portafolio.acciones)
+        for i, accion in enumerate(json_acciones, start=1):
+            # json_accion = json.loads(accion)
+            print(
+                f"    {i}. {accion['simbolo']} - {accion['nombre']} - Cantidad: {accion['cantidad']}"
+            )
+
     print(" ")
     print(" ")
     print("   -------------------------------------   ")
