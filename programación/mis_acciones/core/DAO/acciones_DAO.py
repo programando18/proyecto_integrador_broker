@@ -20,3 +20,20 @@ class AccionesDAO:
             except mysql.connector.Error as err:
                 print(f"Error al obtener las acciones: {err}")
                 return None
+
+    def descontar_acciones(self, simbolo: str, cantidad: int) -> bool:
+        query = """
+            UPDATE acciones 
+            SET cantidad = cantidad - %s 
+            WHERE simbolo = %s
+        """
+
+        with connection_mysql() as conn:
+            try:
+                cursor = conn.cursor()
+                cursor.execute(query, (cantidad, simbolo))
+                conn.commit()
+                return True
+            except mysql.connector.Error as err:
+                print(f"Error al descontar las acciones: {err}")
+                return False

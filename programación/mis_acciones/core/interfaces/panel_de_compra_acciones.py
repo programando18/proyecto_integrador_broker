@@ -5,6 +5,8 @@ acciones_DAO = AccionesDAO()
 
 
 def panel_de_compra_acciones():
+    accion_seleccionada = {}
+    cantidad = 0
 
     acciones = acciones_DAO.obtener_acciones()
 
@@ -20,13 +22,13 @@ def panel_de_compra_acciones():
             accion_seleccionada = acciones[numero_accion - 1]
             print(f"Información adicional de {accion_seleccionada['nombre']}:")
             print(f"Precio: {accion_seleccionada['precio']}")
-            # Aquí puedes agregar más información si está disponible
         else:
             print("Selección inválida.")
     else:
         numero_accion = int(seleccion)
         if 1 <= numero_accion <= len(acciones):
             accion_seleccionada = acciones[numero_accion - 1]
-            return accion_seleccionada
         else:
             print("Selección inválida.")
+    cantidad = int(input("Ingrese la cantidad de acciones que desea comprar: "))
+    return {"accion": accion_seleccionada, "cantidad": cantidad}

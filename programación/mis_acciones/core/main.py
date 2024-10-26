@@ -61,6 +61,7 @@ def main():
                 total_invertido=datos_portafolio["total_invertido"],
                 saldo=datos_portafolio["saldo"],
                 acciones=datos_portafolio["acciones"],
+                id_inversor=datos_portafolio["id_inversor"],
             )
 
             panel_de_control(usuario, portafolio)
