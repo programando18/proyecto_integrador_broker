@@ -57,11 +57,11 @@ class InversorDAO:
                     print("Inversor registrado exitosamente.")
                     return inversor
                 else:
-                    print("No se pudo registrar el inversor.")
+                    raise ("No se pudo registrar el inversor.")
                     return None
 
             except mysql.connector.Error as err:
-                print(f"Error al registrar el inversor: {err}")
+                raise (f"Error al registrar el inversor: {err}")
                 return None
 
     def obtener_inversor_por_email(self, email):
