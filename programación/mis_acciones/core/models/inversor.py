@@ -69,11 +69,11 @@ class Inversor:
     def descontar_saldo(saldo,monto,comision): 
         total = monto + (monto * comision)
         if self.validar_saldo_suficiente(monto, comision):
-          self.__saldo -= total_costo
-          self.agregar_a_historial(f"Se descontó ${total} del saldo para una inversión de ${monto}.")
+           self.__saldo -= total_costo
+           self.agregar_a_historial(f"Se descontó ${total} del saldo para una inversión de ${monto}.")
           return self.__saldo 
         else:
-          raise ValueError("Saldo insuficiente para realizar la inversión.")
+        raise ValueError("Saldo insuficiente para realizar la inversión.")
 
    
         if self.validar_saldo_suficiente(monto, comision):

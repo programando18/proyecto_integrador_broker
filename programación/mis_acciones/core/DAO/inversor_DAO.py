@@ -1,7 +1,3 @@
-
-
-
-
 import mysql.connector
 from DAO.DataAccessDAO import DataAccessDAO
 from models.inversor import Inversor
@@ -68,7 +64,31 @@ class InversorDAO:
                 return None
 
     def get_inversor_by_email(self, email):
-        print("Buscando inversor por email")
+        # print("Buscando inversor por email")
+        with self.__connect_to_mysql() as conn:
+            try:
+                cursor = conn.cursor()
+                query = "SELECT * FROM inversor WHERE email=%s"
+                cursor.execute(query, (email,))
+                row = cursor.fetchone()
+                if row:
+                    return object(
+                        row[0],
+                        row[1],
+                        row[2],
+                        row[3],
+                        row[4],
+                        row[5],
+                        row[6],
+                        row[7],
+                        row[8],
+                        row[9],
+                        row[10],
+                        row[11],
+                    )
+                return None
+            except mysql.connector.Error as err:
+                raise err
 
     def get_inversor_by_email_and_password(self, email, password):
         print("Buscando inversor por email y password")
