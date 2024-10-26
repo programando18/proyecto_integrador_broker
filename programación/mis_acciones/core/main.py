@@ -14,7 +14,7 @@ def main():
     connection_mysql()
     opcion = bienvenida()
 
-    inversor_dao = InversorDAO()
+   
 
     while True:
         if opcion == "1":
@@ -33,26 +33,28 @@ def main():
             # Si el inversor existe, comparar contraseñas
             # Si las contraseñas coinciden, continuar a lo siguiente (panel_de_control, ya está implementado)
             # ------------------------------------------------|
-            #
-            #
+            inversor_dao = InversorDAO()
+
+            email_inversor = inversor_dao.get_inversor_by_email(email)
+            if email_inversor is None:
+                print("Usuario no encontrado.")
+            return None
+
+            # Obtener la contraseña encriptada de los datos del usuario
+            contraseña_almacenada = datos_usuario["contraseña"]
+             # 3. Comparar la contraseña con la almacenada en la BBDD
+            
+
+
+            # 4  Crear una instancia de Inversor si todo coincide
+
+
             # -------------------------------------------------|
 
             # Si todo va bien, traemos los datos de la BBDD
             # y creamos una instancia de Inversor:
 
-            # DATOS FALSOS POR AHORA
-            usuario = {
-                "nombre": "Christian",
-                "apellido": "Caracach",
-                # Datos de inversor
-                "total_invertido": "0",
-                "rendimiento": "0",
-                "saldo": "0",
-                "acciones": ("AAPL", "TSLA", "AMZN"),
-            }
-
-            # Creamos una instancia de Inversor con los datos obtenidos
-            usuario = Inversor(
+            inversor = Inversor(
                 nombre=datos_usuario["nombre"],
                 apellido=datos_usuario["apellido"],
                 total_invertido=datos_usuario["total_invertido"],
@@ -60,6 +62,8 @@ def main():
                 saldo=datos_usuario["saldo"],
                 acciones=datos_usuario["acciones"],
             )
+            print("Usuario autenticado exitosamente.")
+            return inversor
 
             # ACA hay que usar el id_inversor para obtener el portafolio
 

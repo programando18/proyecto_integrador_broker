@@ -14,6 +14,7 @@ class InversorDAO:
             query = "SELECT * FROM inversor WHERE id_inversor = %s"
         return self.execute_query(query, (id_inversor,))
 
+
     def registrar_inversor(inversor: Inversor) -> Inversor:
         # 1. Conectarse a la base de datos
         conn = connection_mysql()
@@ -66,22 +67,35 @@ class InversorDAO:
                     print("Inversor registrado exitosamente.")
                     return inversor
                 else:
-                    print("No se pudo registrar el inversor.")
+                    raise("No se pudo registrar el inversor.")
                     return None
 
             except mysql.connector.Error as err:
-                print(f"Error al registrar el inversor: {err}")
-                return None
+               raise(f"Error al registrar el inversor: {err}")
+               return None
 
-    # hacer hoy
+   
     def get_inversor_by_email(self, email):
-        print("Buscando inversor por email")
+        query = "SELECT * FROM inversor WHERE email = %s"
+    resultado = self.execute_query(query, (email))
+    if resultado:
+        return Inversor(*resultado)
+    else:
+        raise("No se encontró ningún inversor con ese email.")
 
-    # hacer hoy
-    def get_inversor_by_email_and_password(self, email, password):
-        print("Buscando inversor por email y password")
 
-    # hacer hoy:
+ 
+    def get_password_by_email(self, password):
+         query = "SELECT contraseña FROM inversor WHERE email = %s"
+         resultado = self.execute_query(query, (email))
+
+         if resultado:
+            return resultado[0]  # Retorna la contraseña encriptada
+         else:
+            print("No se encontró ningún inversor con ese email.")
+          
+
+    # hacer hoy:gi
     def comparar_password(self):
         return ""
 

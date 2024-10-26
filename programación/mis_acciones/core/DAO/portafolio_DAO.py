@@ -58,7 +58,7 @@ class PortafolioDao(data_access_dao.DataAccessDAO):
                     )
                 else:
                     return None
-            except mysql.connector.Error as err:
+         except mysql.connector.Error as err:
                 raise err
 
     # def Update(self, portafolio: portafolio):
