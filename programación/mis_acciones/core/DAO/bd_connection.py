@@ -1,47 +1,57 @@
 import mysql.connector
 import logging
+import json
+import os
+
 from mysql.connector import errorcode
 
-# Configuración del logger
-logger = logging.getLogger("mysql.connector")  # Nombre del logger
-logger.setLevel(logging.INFO)  # Nivel de registro (puedes ajustar a DEBUG, ERROR, etc.)
+logger = logging.getLogger("mysql.connector")
+logger.setLevel(logging.INFO)
 
-# Formateador para los mensajes de registro
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
-# Manejador para mostrar los registros en la consola
 stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(formatter)
 
-# Agregar el manejador al logger
 logger.addHandler(stream_handler)
 
 
+def get_db_config():
+    try:
+        base_path = os.path.dirname(os.path.abspath(__file__))
+        config_path = base_path + "/config.json"
+        with open(config_path, "r") as config_file:
+            config = json.load(config_file)
+            return config
+    except FileNotFoundError:
+        logger.error("El archivo de configuración no se encontró.")
+    except json.JSONDecodeError:
+        logger.error("Error al decodificar el archivo de configuración.")
+    return None
+
+
 def connection_mysql():
-    try: 
+    config = get_db_config()
+    if config is None:
+        return None
+
+    try:
         conn = mysql.connector.connect(
-            user='root', 
-            password='34215876a.',
-            host='localhost',
-            database='arg_broker',
-            port=3306   
+            user=config.get("user"),
+            password=config.get("password"),
+            host=config.get("host"),
+            database=config.get("database"),
+            port=config.get("port", 3306),  # Default port to 3306 if not specified
         )
-        logger.info("Conexión exitosa a la base de datos")
         return conn
 
     except mysql.connector.Error as err:
         # Error de acceso denegado (usuario o contraseña incorrectos)
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            logger.error("Usuario o Password no válido") 
+            logger.error("Usuario o Password no válido")
         # La base de datos especificada no existe
         elif err.errno == errorcode.ER_BAD_DB_ERROR:
-            logger.error("La base de datos no existe.") 
+            logger.error("La base de datos no existe.")
         else:
             logger.error(f"Error desconocido: {err}")
     return None
-
-
-# Probar la conexión
-conn = connection_mysql()
-
-

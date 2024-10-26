@@ -1,4 +1,5 @@
 from models.tipo_inversor import Tipo_Inversor
+from programación.mis_acciones.core.DAO.inversor_DAO import InversorDAO
 
 
 class Inversor:
@@ -31,7 +32,6 @@ class Inversor:
         self.acciones = acciones
         self.historial = []
         self.monto = 0
-        self.tasa_interes = 0
 
     def obtener_tipo_inversor(self):
         return self.__tipo_inversor
@@ -50,15 +50,17 @@ class Inversor:
     def obtener_saldo(self):
         return self.__saldo
 
-    def calcular_rendimiento(self, tasa_interes):
-        """Calcula el rendimiento basado en una tasa de interés."""
-        if tasa_interes > 0:
+    # verififcar si esat bien?
+    def calcular_rendimiento(self, precio_venta):
+        """Calcula el rendimiento basado en basado en  el precio
+        de compra con el precio de cotización actual."""
+        if self.__precio_compra >= 0:
             rendimiento = self.__saldo * (tasa_interes / 100)
             self.__rendimiento += rendimiento
             self.__saldo += rendimiento
             self.agregar_a_historial(f"Se calculó un rendimiento de ${rendimiento}.")
         else:
-            raise ValueError("El valor de la tasa de interes debe ser mayor a 0")
+            raise ValueError("El valor de la tasa de venta debe ser mayor a 0")
 
     def validar_saldo(saldo, monto, comision):
         total = monto + (monto * comision)

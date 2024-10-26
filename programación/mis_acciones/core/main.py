@@ -3,17 +3,20 @@ from interfaces.panel_de_control import panel_de_control
 from forms.login import formulario_login
 from forms.register import registrar_inversor
 from models.inversor import Inversor
+from models.portafolio import Portafolio
 from DAO.inversor_DAO import InversorDAO
 from forms.recover import ingresar_email, recuperar_contraseña
 from utils.validaciones import validar_contraseña, validar_email
+from DAO.bd_connection import connection_mysql
 
 
 def main():
+    connection_mysql()
     opcion = bienvenida()
 
     inversor_dao = InversorDAO()
 
-    while opcion <= "4":
+    while True:
         if opcion == "1":
             datos_login = formulario_login()
 
@@ -54,7 +57,7 @@ def main():
             email = ingresar_email()
 
             # Acá nos conectamos con la BBDD y buscamos al inversor
-            inversor_dao.get_inversor(id_inversor)
+            # inversor_dao.get_inversor(id_inversor)
             # Si el usuario existe, llenar ésto con su pregunta secreta, respuesta secreta y contraseña
             usuario = {
                 "Pregunta Secreta": "¿Cuál es tu color favorito?",

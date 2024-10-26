@@ -1,44 +1,41 @@
 import mysql.connector
-from DAO.DataAccessDAO import DataAccessDAO
+import json
+
 from models.inversor import Inversor
+from DAO.bd_connection import connection_mysql
 
 
 class InversorDAO:
     def __init__(self):
         super().__init__()
 
-    def __connect_to_mysql(self):
-        try:
-            return mysql.connector.connect(
-                host="localhost",
-                user="root",
-                password="ch35578113",
-                database="arg_broker",
-            )
-        except mysql.connector.Error as err:
-            if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-                raise ("Usuario o Password no válido")
-            elif err.errno == errorcode.ER_BAD_DB_ERROR:
-                raise ("La base de datos no existe.")
-            else:
-                raise (err)
-
     def get_inversor(self, id_inversor):
         query = "SELECT * FROM inversor WHERE id_inversor = %s"
         return self.execute_query(query, (id_inversor,))
 
-    def registrar_inversor(self, inversor: Inversor) -> Inversor:
+    def registrar_inversor(inversor: Inversor) -> Inversor:
+        # 1. Conectarse a la base de datos
+        conn = connection_mysql()
+
+        if conn is None:
+            logging.info("No se pudo establecer la conexión con la base de datos.")
+            return None
+
+        # 2. Crear la consulta SQL de inserción
         query = """
-        INSERT INTO inversor (cuit, nombre, apellido, email, contraseña, pregunta_secreta, respuesta_secreta)
+        INSERT INTO inversores (cuit, nombre, apellido, email, contraseña, pregunta_secreta, respuesta_secreta)
         VALUES (%s, %s, %s, %s, %s, %s, %s)
         """
 
-        # Manejo de la conexión a la base de datos
-        with self.__connect_to_mysql() as conn:
+        portfolio_query = """
+        INSERT INTO portafolios (id_inversor, total_invertido, saldo, acciones) 
+        VALUES (%s, %s, %s, %s)
+        """
+
+        with connection_mysql() as conn:
             try:
                 cursor = conn.cursor()
 
-                # Ejecutar la consulta usando los atributos del objeto Inversor
                 cursor.execute(
                     query,
                     (
@@ -52,6 +49,18 @@ class InversorDAO:
                     ),
                 )
                 conn.commit()
+
+                id_inversor = cursor.lastrowid
+                print(id_inversor)
+
+                acciones_json = json.dumps({})
+
+                cursor.execute(
+                    portfolio_query, (id_inversor, 0.0, 1000000.0, acciones_json)
+                )
+
+                conn.commit()
+
                 if cursor.rowcount > 0:
                     print("Inversor registrado exitosamente.")
                     return inversor
@@ -63,6 +72,7 @@ class InversorDAO:
                 print(f"Error al registrar el inversor: {err}")
                 return None
 
+    # hacer hoy
     def get_inversor_by_email(self, email):
         # print("Buscando inversor por email")
         with self.__connect_to_mysql() as conn:
@@ -90,8 +100,13 @@ class InversorDAO:
             except mysql.connector.Error as err:
                 raise err
 
+    # hacer hoy
     def get_inversor_by_email_and_password(self, email, password):
         print("Buscando inversor por email y password")
+
+    # hacer hoy:
+    def comparar_password(self):
+        return ""
 
     def comprar_accion(self, id_inversor, id_accion):
         print("")

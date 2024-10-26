@@ -31,11 +31,11 @@ def panel_de_venta_acciones():
             print(f"Precio: {accion_seleccionada['precio']}")
             # Aquí puedes agregar más información si está disponible
         else:
-            print("Selección inválida.")
+            raise("Selección inválida.")
     else:
         numero_accion = int(seleccion)
         if 1 <= numero_accion <= len(acciones):
             accion_seleccionada = acciones[numero_accion - 1]
             return accion_seleccionada
         else:
-            print("Selección inválida.")
+           raise("Selección inválida.")
