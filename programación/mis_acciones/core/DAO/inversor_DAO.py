@@ -95,7 +95,7 @@ class InversorDAO:
             print("No se encontró ningún inversor con ese email.")
           
 
-    # hacer hoy:gi
+   
     def comparar_password(self):
         return ""
 

@@ -8,7 +8,7 @@ from DAO.inversor_DAO import InversorDAO
 from forms.recover import ingresar_email, recuperar_contraseña
 from utils.validaciones import validar_contraseña, validar_email
 from DAO.bd_connection import connection_mysql
-
+import bcrypt
 
 def main():
     connection_mysql()
@@ -35,18 +35,23 @@ def main():
             # ------------------------------------------------|
             inversor_dao = InversorDAO()
 
-            email_inversor = inversor_dao.get_inversor_by_email(email)
+            datos_inversor = inversor_dao.get_inversor_by_email(email)
             if email_inversor is None:
                 print("Usuario no encontrado.")
-            return None
+            datos_login = formulario_login()
+            email, contraseña = datos_login
 
             # Obtener la contraseña encriptada de los datos del usuario
-            contraseña_almacenada = datos_usuario["contraseña"]
+            contraseña_almacenada = datos_inversor["contraseña"]
+            if contraseña_almacenada is None:
+                print("Usuario no encontrado.")
+
+            if contraseña_almacenada == datos_inversor: 
+                print ("Contraseña correcta. Usuario autenticado exitosamente.")
+    
              # 3. Comparar la contraseña con la almacenada en la BBDD
-            
+          
 
-
-            # 4  Crear una instancia de Inversor si todo coincide
 
 
             # -------------------------------------------------|
