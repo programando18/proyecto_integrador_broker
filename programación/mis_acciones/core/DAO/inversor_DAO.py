@@ -9,12 +9,7 @@ class InversorDAO:
     def __init__(self):
         super().__init__()
 
-    def get_inversor(self, id_inversor):
-        query = "SELECT * FROM inversor WHERE id_inversor = %s"
-        return self.execute_query(query, (id_inversor,))
-
     def registrar_inversor(self, inversor: Inversor) -> Inversor:
-        conn = connection_mysql()
 
         if conn is None:
             logging.info("No se pudo establecer la conexión con la base de datos.")
@@ -88,17 +83,3 @@ class InversorDAO:
         except mysql.connector.Error as err:
             print(f"Error al obtener el inversor: {err}")
             return None
-
-    # hacer hoy
-    def get_inversor_by_email_and_password(self, email, password):
-        print("Buscando inversor por email y password")
-
-    # hacer hoy:
-    def comparar_password(self):
-        return ""
-
-    def comprar_accion(self, id_inversor, id_accion):
-        print("")
-
-    def vender_accion(self, id_inversor, id_accion):
-        print("")

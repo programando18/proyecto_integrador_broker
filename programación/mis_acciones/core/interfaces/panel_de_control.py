@@ -6,7 +6,6 @@ acciones_DAO = AccionesDAO()
 
 
 def panel_de_control(usuario, portafolio):
-    print(portafolio)
     print("   -------------------------------------   ")
     print("              MIS ACCIONES                 ")
     print("   -------------------------------------   ")
@@ -65,4 +64,4 @@ def panel_de_control(usuario, portafolio):
         elif opcion == "3":
             break
         else:
-           raise("Opción inválida")
+            raise ("Opción inválida")
