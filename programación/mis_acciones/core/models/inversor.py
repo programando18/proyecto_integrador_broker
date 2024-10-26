@@ -1,5 +1,4 @@
 from models.tipo_inversor import Tipo_Inversor
-from programación.mis_acciones.core.DAO.inversor_DAO import InversorDAO
 
 
 class Inversor:
@@ -12,11 +11,6 @@ class Inversor:
         contraseña="",
         pregunta_secreta="",
         respuesta_secreta="",
-        tipo_inversor="",
-        total_invertido="",
-        rendimiento="",
-        saldo="",
-        acciones=(),
     ):
         self.cuit = cuit
         self.nombre = nombre
@@ -25,13 +19,6 @@ class Inversor:
         self.contraseña = contraseña
         self.pregunta_secreta = pregunta_secreta
         self.respuesta_secreta = respuesta_secreta
-        self.tipo_inversor = tipo_inversor
-        self.total_invertido = total_invertido
-        self.rendimiento = rendimiento
-        self.saldo = saldo
-        self.acciones = acciones
-        self.historial = []
-        self.monto = 0
 
     def obtener_tipo_inversor(self):
         return self.__tipo_inversor
@@ -68,16 +55,18 @@ class Inversor:
             return True
         else:
             return False
-    def descontar_saldo(saldo,monto,comision): 
+
+    def descontar_saldo(saldo, monto, comision):
         total = monto + (monto * comision)
         if self.validar_saldo_suficiente(monto, comision):
-          self.__saldo -= total_costo
-          self.agregar_a_historial(f"Se descontó ${total} del saldo para una inversión de ${monto}.")
-          return self.__saldo 
+            self.__saldo -= total_costo
+            self.agregar_a_historial(
+                f"Se descontó ${total} del saldo para una inversión de ${monto}."
+            )
+            return self.__saldo
         else:
-          raise ValueError("Saldo insuficiente para realizar la inversión.")
+            raise ValueError("Saldo insuficiente para realizar la inversión.")
 
-   
         if self.validar_saldo_suficiente(monto, comision):
             self.__saldo -= total_costo
             self.agregar_a_historial(

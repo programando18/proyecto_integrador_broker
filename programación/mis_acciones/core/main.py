@@ -23,42 +23,32 @@ def main():
             while not validar_email(datos_login[0]) or not validar_contraseña(
                 datos_login[1]
             ):
-                print("Datos inválidos, por favor intente de nuevo")
+                print(
+                    "Datos inválidos, por favor intente de nuevo"
+                )  # TODO Mejorar interfaz
                 datos_login = formulario_login()
 
-            # Acá va la conexión con la BBDD y el chequeo de que el usuario exista
-            # Acá tenés que trabajar MILI.
-            # TAREAS
-            # Crear método en InversorDAO para obtener un inversor por email
-            # Si el inversor existe, comparar contraseñas
-            # Si las contraseñas coinciden, continuar a lo siguiente (panel_de_control, ya está implementado)
-            # ------------------------------------------------|
-            #
-            #
-            # -------------------------------------------------|
+            inversor = inversor_dao.obtener_inversor_por_email(datos_login[0])
 
-            # Si todo va bien, traemos los datos de la BBDD
-            # y creamos una instancia de Inversor:
+            if inversor is None:
+                print("Usuario no encontrado")  # TODO Mejorar interfaz
+                opcion = bienvenida()
+                continue
 
-            # DATOS FALSOS POR AHORA
-            usuario = {
-                "nombre": "Christian",
-                "apellido": "Caracach",
-                # Datos de inversor
-                "total_invertido": "0",
-                "rendimiento": "0",
-                "saldo": "0",
-                "acciones": ("AAPL", "TSLA", "AMZN"),
-            }
+            if inversor["contraseña"] != datos_login[1]:
+                print("Contraseña incorrecta")  # TODO Mejorar interfaz
+                opcion = bienvenida()
+                continue
 
             # Creamos una instancia de Inversor con los datos obtenidos
             usuario = Inversor(
-                nombre=datos_usuario["nombre"],
-                apellido=datos_usuario["apellido"],
-                total_invertido=datos_usuario["total_invertido"],
-                rendimiento=datos_usuario["rendimiento"],
-                saldo=datos_usuario["saldo"],
-                acciones=datos_usuario["acciones"],
+                cuit=inversor["cuit"],
+                nombre=inversor["nombre"],
+                apellido=inversor["apellido"],
+                email=inversor["email"],
+                contraseña=inversor["contraseña"],
+                pregunta_secreta=inversor["pregunta_secreta"],
+                respuesta_secreta=inversor["respuesta_secreta"],
             )
 
             # ACA hay que usar el id_inversor para obtener el portafolio
@@ -87,7 +77,7 @@ def main():
                 acciones=datos_portafolio["acciones"],
             )
 
-            panel_de_control(datos_usuario, datos_portafolio)
+            panel_de_control(usuario, datos_portafolio)
 
             opcion = bienvenida()
         elif opcion == "2":
@@ -112,7 +102,6 @@ def main():
         elif opcion == "3":
             datos_inversor = registrar_inversor()
 
-            # Crear instancia de Inversor
             inversor = Inversor(
                 cuit=datos_inversor["cuit"],
                 nombre=datos_inversor["nombre"],
@@ -125,14 +114,13 @@ def main():
 
             inversor_dao.registrar_inversor(inversor)
 
-            # Si todo va bien hacemos
-            print("Inversor creado exitosamente")
+            print("Inversor creado exitosamente")  # TODO Mejorar interfaz
             opcion = bienvenida()
         elif opcion == "4":
-            print("Gracias por usar Mis Acciones")
+            print("Gracias por usar Mis Acciones")  # TODO Mejorar interfaz
             return
         else:
-            print("Opción inválida")
+            print("Opción inválida")  # TODO Mejorar interfaz
             opcion = bienvenida()
 
 

@@ -13,15 +13,13 @@ class InversorDAO:
         query = "SELECT * FROM inversor WHERE id_inversor = %s"
         return self.execute_query(query, (id_inversor,))
 
-    def registrar_inversor(inversor: Inversor) -> Inversor:
-        # 1. Conectarse a la base de datos
+    def registrar_inversor(self, inversor: Inversor) -> Inversor:
         conn = connection_mysql()
 
         if conn is None:
             logging.info("No se pudo establecer la conexión con la base de datos.")
             return None
 
-        # 2. Crear la consulta SQL de inserción
         query = """
         INSERT INTO inversores (cuit, nombre, apellido, email, contraseña, pregunta_secreta, respuesta_secreta)
         VALUES (%s, %s, %s, %s, %s, %s, %s)
@@ -51,7 +49,6 @@ class InversorDAO:
                 conn.commit()
 
                 id_inversor = cursor.lastrowid
-                print(id_inversor)
 
                 acciones_json = json.dumps({})
 
@@ -72,9 +69,25 @@ class InversorDAO:
                 print(f"Error al registrar el inversor: {err}")
                 return None
 
-    # hacer hoy
-    def get_inversor_by_email(self, email):
-        print("Buscando inversor por email")
+    def obtener_inversor_por_email(self, email):
+        conn = connection_mysql()
+
+        if conn is None:
+            logging.info("No se pudo establecer la conexión con la base de datos.")
+            return None
+
+        query = "SELECT * FROM inversores WHERE email = %s"
+        try:
+            cursor = conn.cursor(dictionary=True)
+            cursor.execute(query, (email,))
+            result = cursor.fetchone()
+            if result:
+                return result
+            else:
+                return None
+        except mysql.connector.Error as err:
+            print(f"Error al obtener el inversor: {err}")
+            return None
 
     # hacer hoy
     def get_inversor_by_email_and_password(self, email, password):
