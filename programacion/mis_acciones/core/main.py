@@ -15,6 +15,8 @@ from utils.validaciones import validar_contraseña, validar_email
 
 from dao.inversor_DAO import InversorDAO
 from dao.portafolio_DAO import PortafolioDAO
+from dao.acciones_DAO import AccionesDAO
+from dao.registro_transacciones_DAO import RegistroTransaccionesDAO
 from dao.bd_conexion import conexion_bd
 
 
@@ -25,6 +27,8 @@ def main():
 
     inversor_dao = InversorDAO(conexion)
     portafolio_dao = PortafolioDAO(conexion)
+    acciones_dao = AccionesDAO(conexion)
+    registro_transacciones_dao = RegistroTransaccionesDAO(conexion)
 
     while True:
         if opcion == "1":
@@ -52,15 +56,18 @@ def main():
 
             portafolio = portafolio_dao.obtener_portafolio(inversor.id_inversor)
 
-            panel_de_control(inversor, portafolio)
+            panel_de_control(
+                inversor,
+                portafolio,
+                portafolio_dao,
+                acciones_dao,
+                registro_transacciones_dao,
+            )
 
             opcion = bienvenida()
         elif opcion == "2":
             email = formulario_ingresar_email()
 
-            # Acá nos conectamos con la BBDD y buscamos al inversor
-            # inversor_dao.get_inversor(id_inversor)
-            # Si el usuario existe, llenar ésto con su pregunta secreta, respuesta secreta y contraseña
             usuario = {
                 "Pregunta Secreta": "¿Cuál es tu color favorito?",
                 "Respuesta Secreta": "Rojo",

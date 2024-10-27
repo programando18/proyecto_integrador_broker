@@ -3,21 +3,14 @@ import json
 from interfaces.panel_de_compra_acciones import panel_de_compra_acciones
 from interfaces.panel_de_venta_acciones import panel_de_venta_acciones
 
-from dao.acciones_DAO import AccionesDAO
-from dao.portafolio_DAO import PortafolioDAO
-from dao.bd_conexion import conexion_bd
-
-conexion = conexion_bd()
-
-acciones_DAO = AccionesDAO(conexion)
-portafolio_DAO = PortafolioDAO(conexion)
+from models.transaccion import Transaccion
 
 
 def saldo_es_suficiente(saldo, accion, cantidad):
     return saldo >= accion["precio_compra_actual"] * cantidad
 
 
-def imprimir_panel(usuario, portafolio):
+def imprimir_panel(usuario, portafolio, portafolio_DAO):
     print("   -------------------------------------   ")
     print("              MIS ACCIONES                 ")
     print("   -------------------------------------   ")
@@ -53,10 +46,11 @@ def imprimir_panel(usuario, portafolio):
     print("|||-------------------------------------|||")
 
 
-def panel_de_control(usuario, portafolio):
-    print(portafolio)
+def panel_de_control(
+    usuario, portafolio, portafolio_DAO, acciones_DAO, registro_transacciones_DAO
+):
 
-    imprimir_panel(usuario, portafolio)
+    imprimir_panel(usuario, portafolio, portafolio_DAO)
 
     opcion = input("    Qué deseas hacer?: ")
 
@@ -91,11 +85,22 @@ def panel_de_control(usuario, portafolio):
                     portafolio.id_inversor,
                     accion["precio_compra_actual"] * cantidad + comisión,
                 )
+                transaccion = Transaccion(
+                    portafolio.id_inversor,
+                    usuario.nombre,
+                    "compra",
+                    accion["simbolo"],
+                    cantidad,
+                    accion["precio_compra_actual"],
+                    accion["precio_compra_actual"] * cantidad,
+                )
+                registro_transacciones_DAO.registrar_transaccion(transaccion)
+
                 print("Acción comprada con éxito")  # TODO mejorar interfaz
             else:
                 print("Saldo insuficiente")
 
-            imprimir_panel(usuario, portafolio)
+            imprimir_panel(usuario, portafolio, portafolio_DAO)
 
             opcion = input("    Qué deseas hacer?: ")
 
@@ -117,9 +122,19 @@ def panel_de_control(usuario, portafolio):
             )
             acciones_DAO.agregar_acciones(accion["simbolo"], cantidad)
             portafolio_DAO.aumentar_saldo(portafolio.id_inversor, precio * cantidad)
+            transaccion = Transaccion(
+                portafolio.id_inversor,
+                usuario.nombre,
+                "venta",
+                accion["simbolo"],
+                cantidad,
+                precio,
+                precio * cantidad,
+            )
+            registro_transacciones_DAO.registrar_transaccion(transaccion)
             print("Acción vendida con éxito")  # TODO mejorar interfaz
 
-            imprimir_panel(usuario, portafolio)
+            imprimir_panel(usuario, portafolio, portafolio_DAO)
 
             opcion = input("    Qué deseas hacer?: ")
 

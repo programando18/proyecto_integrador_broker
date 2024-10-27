@@ -11,9 +11,6 @@ class PortafolioDAO:
     def obtener_portafolio(self, id_inversor: int) -> Portafolio:
         query = "SELECT * FROM portafolios WHERE id_inversor = %s"
 
-        # with self.conexion as conn:
-
-        print(self.conexion.is_connected())
 
         try:
             cursor = self.conexion.cursor(dictionary=True)
