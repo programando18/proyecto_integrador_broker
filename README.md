@@ -24,13 +24,10 @@ El objetivo principal de esta aplicación es ofrecer una experiencia de usuario 
    ```bash
    git clone https://github.com/tu_usuario/MisAcciones.git
 
-2. Navega al directorio del proyecto:
-cd MisAcciones
-
-3. Instala las dependencias necesarias (si aplica):
+2. Instala las dependencias necesarias (si aplica) por consola:
 pip install -r requirements.txt
 
-## Uso
+##Uso
 1. Ejecutar en la consola
    python main.py
    
