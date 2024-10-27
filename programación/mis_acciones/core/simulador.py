@@ -38,8 +38,8 @@ def modificar_precios(db_conn):
     cursor = db_conn.cursor()
 
     for accion in acciones:
-        variacion_compra = random.randint(-10, 10)
-        variacion_venta = random.randint(-10, 10)
+        variacion_compra = random.randint(-2, 2)
+        variacion_venta = random.randint(-2, 2)
 
         nuevo_precio_compra = accion["precio_compra_actual"] + variacion_compra
         nuevo_precio_venta = accion["precio_venta_actual"] + variacion_venta
@@ -64,7 +64,7 @@ def loop_actualizacion():
         while True:
             modificar_precios(db_conn)
             print("Precios actualizados.")
-            time.sleep(60)
+            time.sleep(2)
     else:
         print("No se pudo conectar a la base de datos.")
 

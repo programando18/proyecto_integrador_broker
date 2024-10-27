@@ -19,7 +19,9 @@ def panel_de_control(usuario, portafolio):
     print(f"    Usuario: {usuario.nombre}")
     print(f"    Apellido: {usuario.apellido}")
     print(f"    Total invertido: ${portafolio.total_invertido}")
-    # print(f"    Rendimiento: {portafolio.obtener_rendimiento()}")
+    print(
+        f"    Rendimiento: ${portafolio_DAO.obtener_rendimiento(portafolio.id_inversor, portafolio)}"
+    )
     print(f"    Saldo: ${portafolio.saldo}")
     print("   -------------------------------------   ")
     print("    LISTA DE ACTIVOS/TENENCIAS (simple)    ")
@@ -61,6 +63,7 @@ def panel_de_control(usuario, portafolio):
                         "simbolo": accion["simbolo"],
                         "nombre": accion["nombre"],
                         "cantidad": cantidad,
+                        "precio_compra": accion["precio_compra_actual"],
                     },
                 )
                 acciones_DAO.descontar_acciones(accion["simbolo"], cantidad)
@@ -80,6 +83,10 @@ def panel_de_control(usuario, portafolio):
             if accion:
                 precio = acciones_DAO.obtener_precio_accion(accion["simbolo"])
 
+                print("El precio actual de la acción es: ", precio)
+                opcion = input("¿Desea continuar con la venta? (s/n): ")
+                if opcion != "s":
+                    continue
                 portafolio_DAO.descontar_accion(
                     portafolio.id_inversor, accion["simbolo"], cantidad
                 )
