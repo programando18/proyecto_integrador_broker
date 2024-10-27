@@ -75,8 +75,18 @@ class InversorDAO:
                 cursor = conn.cursor(dictionary=True)
                 cursor.execute(query, (email,))
                 result = cursor.fetchone()
+                cursor.close()
                 if result:
-                    return result
+                    return Inversor(
+                        id_inversor=result["id_inversor"],
+                        cuit=result["cuit"],
+                        nombre=result["nombre"],
+                        apellido=result["apellido"],
+                        email=result["email"],
+                        contraseña=result["contraseña"],
+                        pregunta_secreta=result["pregunta_secreta"],
+                        respuesta_secreta=result["respuesta_secreta"],
+                    )
                 else:
                     return None
             except mysql.connector.Error as err:

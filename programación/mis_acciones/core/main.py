@@ -37,34 +37,14 @@ def main():
                 opcion = bienvenida()
                 continue
 
-            if inversor["contraseña"] != datos_login[1]:
+            if inversor.contraseña != datos_login[1]:
                 print("Contraseña incorrecta")  # TODO Mejorar interfaz
                 opcion = bienvenida()
                 continue
 
-            # Creamos una instancia de Inversor con los datos obtenidos
-            usuario = Inversor(
-                cuit=inversor["cuit"],
-                nombre=inversor["nombre"],
-                apellido=inversor["apellido"],
-                email=inversor["email"],
-                contraseña=inversor["contraseña"],
-                pregunta_secreta=inversor["pregunta_secreta"],
-                respuesta_secreta=inversor["respuesta_secreta"],
-            )
+            portafolio = portafolio_dao.obtener_portafolio(inversor.id_inversor)
 
-            datos_portafolio = portafolio_dao.obtener_portafolio(
-                inversor["id_inversor"]
-            )
-
-            portafolio = Portafolio(
-                total_invertido=datos_portafolio["total_invertido"],
-                saldo=datos_portafolio["saldo"],
-                acciones=datos_portafolio["acciones"],
-                id_inversor=datos_portafolio["id_inversor"],
-            )
-
-            panel_de_control(usuario, portafolio)
+            panel_de_control(inversor, portafolio)
 
             opcion = bienvenida()
         elif opcion == "2":

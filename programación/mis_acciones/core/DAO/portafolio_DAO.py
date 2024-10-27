@@ -18,9 +18,14 @@ class PortafolioDAO:
             try:
                 cursor = conn.cursor(dictionary=True)
                 cursor.execute(query, (id_inversor,))
-                row = cursor.fetchone()
-                if row:
-                    return row
+                result = cursor.fetchone()
+                if result:
+                    return Portafolio(
+                        id_portafolio=result["id_portafolio"],
+                        saldo=result["saldo"],
+                        acciones=result["acciones"],
+                        id_inversor=result["id_inversor"],
+                    )
                 else:
                     return None
             except mysql.connector.Error as err:
