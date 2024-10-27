@@ -13,10 +13,28 @@ El objetivo principal de esta aplicación es ofrecer una experiencia de usuario 
 
 ## Funcionalidades
 
-- **Registro y Autenticación**: Los inversores pueden registrarse y autenticarse para acceder a su cuenta.
+**Registro y Autenticación**: Los inversores pueden registrarse y autenticarse para acceder a su cuenta.
 - **Gestión de Portafolio**: Los inversores pueden ver y gestionar su portafolio de inversiones.
 - **Compra y Venta de Acciones**: Los usuarios pueden comprar y vender acciones a través de la plataforma.
 - **Visualización de Datos**: Los usuarios pueden ver los montos, ganancias y pérdidas de sus inversiones.
+- **Recuperación de Contraseña**: Los usuarios pueden recuperar su contraseña en caso de olvido.
+
+## Instalación
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/tu_usuario/MisAcciones.git
+
+2. Navega al directorio del proyecto:
+cd MisAcciones
+
+3. Instala las dependencias necesarias (si aplica):
+pip install -r requirements.txt
+
+## Uso
+1. Ejecutar en la consola
+   python main.py
+   
+2. Sigue las instrucciones en la consola para registrarte o iniciar sesión.
 
 ## Equipo de trabajo
 
