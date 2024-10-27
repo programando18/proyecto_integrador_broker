@@ -1,8 +1,9 @@
+import json
+
 from interfaces.panel_de_compra_acciones import panel_de_compra_acciones
 from interfaces.panel_de_venta_acciones import panel_de_venta_acciones
 from DAO.acciones_DAO import AccionesDAO
 from DAO.portafolio_DAO import PortafolioDAO
-import json
 
 acciones_DAO = AccionesDAO()
 portafolio_DAO = PortafolioDAO()
@@ -26,9 +27,8 @@ def imprimir_panel(usuario, portafolio):
     )
     print(f"    Saldo: ${portafolio.saldo}")
     print("   -------------------------------------   ")
-    print("    LISTA DE ACTIVOS/TENENCIAS (simple)    ")
+    print("    LISTA DE ACTIVOS/TENENCIAS    ")
     print("   -------------------------------------   ")
-
     if not portafolio.acciones:
         print("    No hay acciones")  # TODO mejorar interfaz
     else:
@@ -37,22 +37,21 @@ def imprimir_panel(usuario, portafolio):
             print(
                 f"    {i}. {accion['simbolo']} - {accion['nombre']} - Cantidad: {accion['cantidad']}"
             )
-
-
-def panel_de_control(usuario, portafolio):
-
-    imprimir_panel(usuario, portafolio)
     print(" ")
     print(" ")
     print("   -------------------------------------   ")
     print("   --------------ACCIONES---------------   ")
     print("   -------------------------------------   ")
-    print(" ")
     print("|||-------Seleccione una opción:--------|||")
     print("||| 1. Comprar Acciones                 |||")
     print("||| 2. Vender Acciones                  |||")
     print("||| 3. Salir                            |||")
     print("|||-------------------------------------|||")
+
+
+def panel_de_control(usuario, portafolio):
+
+    imprimir_panel(usuario, portafolio)
 
     opcion = input("    Qué deseas hacer?: ")
 
@@ -61,6 +60,16 @@ def panel_de_control(usuario, portafolio):
             seleccion = panel_de_compra_acciones()
             accion = seleccion["accion"]
             cantidad = seleccion["cantidad"]
+            comisión = round(float(accion["precio_compra_actual"] * 0.15), 2)
+
+            print(
+                "El precio actual de la acción es: $", accion["precio_compra_actual"]
+            )  # TODO Mejorar interfaz
+            print("El costo de la comisión del broker es: $", comisión)
+            opcion = input("¿Desea continuar con la compra? (s/n): ")
+
+            if opcion != "s":
+                continue
 
             if saldo_es_suficiente(portafolio.saldo, accion, cantidad):
                 portafolio_DAO.agregar_accion(
@@ -74,57 +83,39 @@ def panel_de_control(usuario, portafolio):
                 )
                 acciones_DAO.descontar_acciones(accion["simbolo"], cantidad)
                 portafolio_DAO.descontar_saldo(
-                    portafolio.id_inversor, accion["precio_compra_actual"] * cantidad
+                    portafolio.id_inversor,
+                    accion["precio_compra_actual"] * cantidad + comisión,
                 )
                 print("Acción comprada con éxito")  # TODO mejorar interfaz
             else:
                 print("Saldo insuficiente")
 
             imprimir_panel(usuario, portafolio)
-            print(" ")
-            print(" ")
-            print("   -------------------------------------   ")
-            print("   --------------ACCIONES---------------   ")
-            print("   -------------------------------------   ")
-            print(" ")
-            print("|||-------Seleccione una opción:--------|||")
-            print("||| 1. Comprar Acciones                 |||")
-            print("||| 2. Vender Acciones                  |||")
-            print("||| 3. Salir                            |||")
-            print("|||-------------------------------------|||")
+
             opcion = input("    Qué deseas hacer?: ")
 
         elif opcion == "2":
             seleccion = panel_de_venta_acciones(json.loads(portafolio.acciones))
             accion = seleccion["accion"]
             cantidad = seleccion["cantidad"]
+            precio = acciones_DAO.obtener_precio_accion(accion["simbolo"])
+            comisión = round(float(precio * cantidad * 0.15), 2)
 
-            if accion:
-                precio = acciones_DAO.obtener_precio_accion(accion["simbolo"])
+            print("El precio actual de la acción es: $", precio)
+            print("El costo de la comisión del broker es: $", comisión)
+            opcion = input("¿Desea continuar con la venta? (s/n): ")
 
-                print("El precio actual de la acción es: ", precio)
-                opcion = input("¿Desea continuar con la venta? (s/n): ")
-                if opcion != "s":
-                    continue
-                portafolio_DAO.descontar_accion(
-                    portafolio.id_inversor, accion["simbolo"], cantidad
-                )
-                acciones_DAO.agregar_acciones(accion["simbolo"], cantidad)
-                portafolio_DAO.aumentar_saldo(portafolio.id_inversor, precio * cantidad)
-                print("Acción vendida con éxito")
+            if opcion != "s":
+                continue
+            portafolio_DAO.descontar_accion(
+                portafolio.id_inversor, accion["simbolo"], cantidad
+            )
+            acciones_DAO.agregar_acciones(accion["simbolo"], cantidad)
+            portafolio_DAO.aumentar_saldo(portafolio.id_inversor, precio * cantidad)
+            print("Acción vendida con éxito")  # TODO mejorar interfaz
 
             imprimir_panel(usuario, portafolio)
-            print(" ")
-            print(" ")
-            print("   -------------------------------------   ")
-            print("   --------------ACCIONES---------------   ")
-            print("   -------------------------------------   ")
-            print(" ")
-            print("|||-------Seleccione una opción:--------|||")
-            print("||| 1. Comprar Acciones                 |||")
-            print("||| 2. Vender Acciones                  |||")
-            print("||| 3. Salir                            |||")
-            print("|||-------------------------------------|||")
+
             opcion = input("    Qué deseas hacer?: ")
 
         elif opcion == "3":
