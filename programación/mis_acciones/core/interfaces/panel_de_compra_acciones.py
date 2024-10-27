@@ -1,7 +1,10 @@
 from interfaces.lista_acciones import imprimir_lista_acciones
 from DAO.acciones_DAO import AccionesDAO
+from DAO.bd_connection import connection_mysql
 
-acciones_DAO = AccionesDAO()
+conexion = connection_mysql()
+
+acciones_DAO = AccionesDAO(conexion)
 
 
 def panel_de_compra_acciones():

@@ -4,9 +4,12 @@ from interfaces.panel_de_compra_acciones import panel_de_compra_acciones
 from interfaces.panel_de_venta_acciones import panel_de_venta_acciones
 from DAO.acciones_DAO import AccionesDAO
 from DAO.portafolio_DAO import PortafolioDAO
+from DAO.bd_connection import connection_mysql
 
-acciones_DAO = AccionesDAO()
-portafolio_DAO = PortafolioDAO()
+conexion = connection_mysql()
+
+acciones_DAO = AccionesDAO(conexion)
+portafolio_DAO = PortafolioDAO(conexion)
 
 
 def saldo_es_suficiente(saldo, accion, cantidad):
@@ -14,6 +17,7 @@ def saldo_es_suficiente(saldo, accion, cantidad):
 
 
 def imprimir_panel(usuario, portafolio):
+
     print("   -------------------------------------   ")
     print("              MIS ACCIONES                 ")
     print("   -------------------------------------   ")
@@ -50,6 +54,7 @@ def imprimir_panel(usuario, portafolio):
 
 
 def panel_de_control(usuario, portafolio):
+    print(portafolio)
 
     imprimir_panel(usuario, portafolio)
 

@@ -1,22 +1,27 @@
 from interfaces.bienvenida import bienvenida
 from interfaces.panel_de_control import panel_de_control
+
 from forms.login import formulario_login
 from forms.register import registrar_inversor
+from forms.recover import ingresar_email, recuperar_contraseña
+
 from models.inversor import Inversor
 from models.portafolio import Portafolio
-from forms.recover import ingresar_email, recuperar_contraseña
-from utils.validaciones import validar_contraseña, validar_email
 
+from utils.validaciones import validar_contraseña, validar_email
 
 from DAO.inversor_DAO import InversorDAO
 from DAO.portafolio_DAO import PortafolioDAO
+from DAO.bd_connection import connection_mysql
 
 
 def main():
     opcion = bienvenida()
 
-    inversor_dao = InversorDAO()
-    portafolio_dao = PortafolioDAO()
+    conexion = connection_mysql()
+
+    inversor_dao = InversorDAO(conexion)
+    portafolio_dao = PortafolioDAO(conexion)
 
     while True:
         if opcion == "1":

@@ -1,36 +1,37 @@
 import mysql.connector
 import json
 
-from DAO.bd_connection import connection_mysql
 from models.portafolio import Portafolio
 
 
 class PortafolioDAO:
-    def __init__(self):
-        super().__init__()
+    def __init__(self, conexion):
+        self.conexion = conexion
 
     def obtener_portafolio(self, id_inversor: int) -> Portafolio:
+        query = "SELECT * FROM portafolios WHERE id_inversor = %s"
 
-        query = "SELECT * FROM portafolios WHERE id_portafolio = %s"
+        # with self.conexion as conn:
 
-        with connection_mysql() as conn:
+        print(self.conexion.is_connected())
 
-            try:
-                cursor = conn.cursor(dictionary=True)
-                cursor.execute(query, (id_inversor,))
-                result = cursor.fetchone()
-                if result:
-                    return Portafolio(
-                        id_portafolio=result["id_portafolio"],
-                        saldo=result["saldo"],
-                        acciones=result["acciones"],
-                        id_inversor=result["id_inversor"],
-                    )
-                else:
-                    return None
-            except mysql.connector.Error as err:
-                print(f"Error al obtener el portafolio: {err}")
+        try:
+            cursor = self.conexion.cursor(dictionary=True)
+            cursor.execute(query, (id_inversor,))
+            result = cursor.fetchone()
+            cursor.close()
+            if result:
+                return Portafolio(
+                    id_portafolio=result["id_portafolio"],
+                    saldo=result["saldo"],
+                    acciones=result["acciones"],
+                    id_inversor=result["id_inversor"],
+                )
+            else:
                 return None
+        except mysql.connector.Error as err:
+            print(f"Error al obtener el portafolio: {err}")
+            return None
 
     def agregar_accion(self, id_inversor: int, accion: dict) -> bool:
 
@@ -40,25 +41,23 @@ class PortafolioDAO:
             WHERE id_portafolio = %s
         """
 
-        with connection_mysql() as conn:
-
-            try:
-                cursor = conn.cursor()
-                cursor.execute(
-                    query,
-                    (
-                        accion["simbolo"],
-                        accion["nombre"],
-                        accion["cantidad"],
-                        accion["precio_compra"],
-                        id_inversor,
-                    ),
-                )
-                conn.commit()
-                return True
-            except mysql.connector.Error as err:
-                print(f"Error al agregar la acción: {err}")
-                return False
+        try:
+            cursor = self.conexion.cursor()
+            cursor.execute(
+                query,
+                (
+                    accion["simbolo"],
+                    accion["nombre"],
+                    accion["cantidad"],
+                    accion["precio_compra"],
+                    id_inversor,
+                ),
+            )
+            self.conexion.commit()
+            return True
+        except mysql.connector.Error as err:
+            print(f"Error al agregar la acción: {err}")
+            return False
 
     def descontar_accion(self, id_inversor: int, simbolo: str, cantidad: int) -> bool:
 
@@ -74,40 +73,35 @@ class PortafolioDAO:
             WHERE id_portafolio = %s
         """
 
-        with connection_mysql() as conn:
-
-            try:
-                cursor = conn.cursor(dictionary=True)
-                cursor.execute(query_select, (id_inversor,))
-                row = cursor.fetchone()
-                if row and row["acciones"]:
-                    acciones = json.loads(row["acciones"])
-                    for accion in acciones:
-                        if accion["simbolo"] == simbolo:
-                            if accion["cantidad"] >= cantidad:
-                                accion["cantidad"] -= cantidad
-                                if accion["cantidad"] == 0:
-                                    acciones.remove(accion)
-                                break
-                            else:
-                                print(
-                                    "Cantidad insuficiente de acciones para descontar"
-                                )
-                                return False
-                    else:
-                        print("Acción no encontrada en el portafolio")
-                        return False
-
-                    acciones_json = json.dumps(acciones)
-                    cursor.execute(query_update, (acciones_json, id_inversor))
-                    conn.commit()
-                    return True
+        try:
+            cursor = self.conexion.cursor(dictionary=True)
+            cursor.execute(query_select, (id_inversor,))
+            row = cursor.fetchone()
+            if row and row["acciones"]:
+                acciones = json.loads(row["acciones"])
+                for accion in acciones:
+                    if accion["simbolo"] == simbolo:
+                        if accion["cantidad"] >= cantidad:
+                            accion["cantidad"] -= cantidad
+                            if accion["cantidad"] == 0:
+                                acciones.remove(accion)
+                            break
+                        else:
+                            print("Cantidad insuficiente de acciones para descontar")
+                            return False
                 else:
-                    print("Portafolio no encontrado o sin acciones")
+                    print("Acción no encontrada en el portafolio")
                     return False
-            except mysql.connector.Error as err:
-                print(f"Error al descontar la acción: {err}")
+                acciones_json = json.dumps(acciones)
+                cursor.execute(query_update, (acciones_json, id_inversor))
+                self.conexion.commit()
+                return True
+            else:
+                print("Portafolio no encontrado o sin acciones")
                 return False
+        except mysql.connector.Error as err:
+            print(f"Error al descontar la acción: {err}")
+            return False
 
     def descontar_saldo(self, id_inversor: int, monto: float) -> bool:
 
@@ -117,16 +111,14 @@ class PortafolioDAO:
             WHERE id_inversor = %s
         """
 
-        with connection_mysql() as conn:
-
-            try:
-                cursor = conn.cursor()
-                cursor.execute(query, (monto, id_inversor))
-                conn.commit()
-                return True
-            except mysql.connector.Error as err:
-                print(f"Error al descontar el saldo: {err}")
-                return False
+        try:
+            cursor = self.conexion.cursor()
+            cursor.execute(query, (monto, id_inversor))
+            self.conexion.commit()
+            return True
+        except mysql.connector.Error as err:
+            print(f"Error al descontar el saldo: {err}")
+            return False
 
     def aumentar_saldo(self, id_inversor: int, monto: float) -> bool:
 
@@ -136,16 +128,14 @@ class PortafolioDAO:
                 WHERE id_inversor = %s
             """
 
-        with connection_mysql() as conn:
-
-            try:
-                cursor = conn.cursor()
-                cursor.execute(query, (monto, id_inversor))
-                conn.commit()
-                return True
-            except mysql.connector.Error as err:
-                print(f"Error al aumentar el saldo: {err}")
-                return False
+        try:
+            cursor = self.conexion.cursor()
+            cursor.execute(query, (monto, id_inversor))
+            self.conexion.commit()
+            return True
+        except mysql.connector.Error as err:
+            print(f"Error al aumentar el saldo: {err}")
+            return False
 
     def obtener_rendimiento(self, id_inversor: int, portafolio: Portafolio) -> float:
 
@@ -155,43 +145,41 @@ class PortafolioDAO:
             WHERE simbolo = %s
         """
 
-        with connection_mysql() as conn:
-            try:
-                cursor = conn.cursor(dictionary=True)
-                if portafolio and portafolio.acciones:
-                    acciones = json.loads(portafolio.acciones)
-                    rendimiento_total = 0.0
-                    for accion in acciones:
-                        cursor.execute(query_accion, (accion["simbolo"],))
-                        accion_data = cursor.fetchone()
-                        if accion_data:
-                            precio_actual = accion_data["precio_venta_actual"]
-                            rendimiento = (
-                                precio_actual - accion["precio_compra"]
-                            ) * accion["cantidad"]
-                            rendimiento_total += rendimiento
-                    return round(float(rendimiento_total), 2)
-                else:
-                    print("Portafolio no encontrado o sin acciones")
-                    return 0.0
-            except mysql.connector.Error as err:
-                print(f"Error al obtener el rendimiento: {err}")
+        try:
+            cursor = self.conexion.cursor(dictionary=True)
+            if portafolio and portafolio.acciones:
+                acciones = json.loads(portafolio.acciones)
+                rendimiento_total = 0.0
+                for accion in acciones:
+                    cursor.execute(query_accion, (accion["simbolo"],))
+                    accion_data = cursor.fetchone()
+                    if accion_data:
+                        precio_actual = accion_data["precio_venta_actual"]
+                        rendimiento = (
+                            precio_actual - accion["precio_compra"]
+                        ) * accion["cantidad"]
+                        rendimiento_total += rendimiento
+                return round(float(rendimiento_total), 2)
+            else:
+                print("Portafolio no encontrado o sin acciones")
                 return 0.0
+        except mysql.connector.Error as err:
+            print(f"Error al obtener el rendimiento: {err}")
+            return 0.0
 
     def obtener_total_invertido(
         self, id_inversor: int, portafolio: Portafolio
     ) -> float:
 
-        with connection_mysql() as conn:
-            try:
-                if portafolio and portafolio.acciones:
-                    acciones = json.loads(portafolio.acciones)
-                    total_invertido = 0.0
-                    for accion in acciones:
-                        total_invertido += accion["precio_compra"] * accion["cantidad"]
-                    return round(float(total_invertido), 2)
-                else:
-                    return 0.0
-            except mysql.connector.Error as err:
-                print(f"Error al obtener el total invertido: {err}")
+        try:
+            if portafolio and portafolio.acciones:
+                acciones = json.loads(portafolio.acciones)
+                total_invertido = 0.0
+                for accion in acciones:
+                    total_invertido += accion["precio_compra"] * accion["cantidad"]
+                return round(float(total_invertido), 2)
+            else:
                 return 0.0
+        except mysql.connector.Error as err:
+            print(f"Error al obtener el total invertido: {err}")
+            return 0.0

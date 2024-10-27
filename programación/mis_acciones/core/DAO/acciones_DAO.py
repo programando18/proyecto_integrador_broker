@@ -1,16 +1,15 @@
 import mysql.connector
 import json
-from DAO.bd_connection import connection_mysql
 
 
 class AccionesDAO:
-    def __init__(self):
-        super().__init__()
+    def __init__(self, conexion):
+        self.conexion = conexion
 
     def obtener_acciones(self):
         query = "SELECT * FROM acciones"
 
-        with connection_mysql() as conn:
+        with self.conexion as conn:
             try:
                 cursor = conn.cursor(dictionary=True)
                 cursor.execute(query)
@@ -24,7 +23,7 @@ class AccionesDAO:
     def obtener_precio_accion(self, simbolo: str):
         query = "SELECT precio_compra_actual FROM acciones WHERE simbolo = %s"
 
-        with connection_mysql() as conn:
+        with self.conexion as conn:
             try:
                 cursor = conn.cursor(dictionary=True)
                 cursor.execute(query, (simbolo,))
@@ -42,7 +41,7 @@ class AccionesDAO:
             WHERE simbolo = %s
         """
 
-        with connection_mysql() as conn:
+        with self.conexion as conn:
             try:
                 cursor = conn.cursor()
                 cursor.execute(query, (cantidad, simbolo))
@@ -59,7 +58,7 @@ class AccionesDAO:
             WHERE simbolo = %s
         """
 
-        with connection_mysql() as conn:
+        with self.conexion as conn:
             try:
                 cursor = conn.cursor()
                 cursor.execute(query, (cantidad, simbolo))
