@@ -71,7 +71,8 @@ class InversorDAO:
             logging.info("No se pudo establecer la conexión con la base de datos.")
             return None
 
-        query = "SELECT * FROM inversores WHERE email = %s"
+        else: 
+            query = "SELECT * FROM inversores WHERE email = %s"
         try:
             cursor = conn.cursor(dictionary=True)
             cursor.execute(query, (email,))

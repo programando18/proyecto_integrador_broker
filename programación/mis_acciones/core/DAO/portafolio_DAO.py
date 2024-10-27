@@ -11,7 +11,7 @@ class PortafolioDAO:
 
     def obtener_portafolio(self, id_inversor: int) -> Portafolio:
 
-        query = "SELECT * FROM portafolios WHERE id_portafolio = %s"
+        query = "SELECT * FROM portafolios WHERE id_inversor = %s"
 
         with connection_mysql() as conn:
 
