@@ -9,8 +9,11 @@ class PortafolioDAO:
         self.conexion = conexion
 
     def obtener_portafolio(self, id_inversor: int) -> Portafolio:
-        query = "SELECT * FROM portafolios WHERE id_inversor = %s"
 
+        if not self.conexion.is_connected():
+            self.conexion.reconnect()
+
+        query = "SELECT * FROM portafolios WHERE id_inversor = %s"
 
         try:
             cursor = self.conexion.cursor(dictionary=True)
@@ -31,6 +34,9 @@ class PortafolioDAO:
             return None
 
     def agregar_accion(self, id_inversor: int, accion: dict) -> bool:
+
+        if not self.conexion.is_connected():
+            self.conexion.reconnect()
 
         query = """
             UPDATE portafolios 
@@ -57,6 +63,9 @@ class PortafolioDAO:
             return False
 
     def descontar_accion(self, id_inversor: int, simbolo: str, cantidad: int) -> bool:
+
+        if not self.conexion.is_connected():
+            self.conexion.reconnect()
 
         query_select = """
             SELECT JSON_EXTRACT(acciones, '$') AS acciones 
@@ -102,6 +111,9 @@ class PortafolioDAO:
 
     def descontar_saldo(self, id_inversor: int, monto: float) -> bool:
 
+        if not self.conexion.is_connected():
+            self.conexion.reconnect()
+
         query = """
             UPDATE portafolios 
             SET saldo = saldo - %s 
@@ -119,6 +131,9 @@ class PortafolioDAO:
 
     def aumentar_saldo(self, id_inversor: int, monto: float) -> bool:
 
+        if not self.conexion.is_connected():
+            self.conexion.reconnect()
+
         query = """
                 UPDATE portafolios 
                 SET saldo = saldo + %s 
@@ -135,6 +150,9 @@ class PortafolioDAO:
             return False
 
     def obtener_rendimiento(self, id_inversor: int, portafolio: Portafolio) -> float:
+
+        if not self.conexion.is_connected():
+            self.conexion.reconnect()
 
         query_accion = """
             SELECT precio_venta_actual 

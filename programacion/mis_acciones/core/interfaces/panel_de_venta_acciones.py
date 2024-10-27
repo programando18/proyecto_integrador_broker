@@ -1,8 +1,13 @@
+import json
+
 from utils.acciones import formatear_acciones
 from interfaces.lista_acciones import imprimir_lista_acciones
 
 
-def panel_de_venta_acciones(acciones):
+def panel_de_venta_acciones(id_inversor, portafolio_DAO):
+    portafolio = portafolio_DAO.obtener_portafolio(id_inversor)
+    acciones = json.loads(portafolio.acciones)
+
     print("|--- Lista de acciones disponibles para vender: ---|")
     for idx, accion in enumerate(acciones, start=1):
         print(
