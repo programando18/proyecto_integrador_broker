@@ -165,10 +165,28 @@ class PortafolioDAO:
                                 precio_actual - accion["precio_compra"]
                             ) * accion["cantidad"]
                             rendimiento_total += rendimiento
-                    return rendimiento_total
+                    return round(float(rendimiento_total), 2)
                 else:
                     print("Portafolio no encontrado o sin acciones")
                     return 0.0
             except mysql.connector.Error as err:
                 print(f"Error al obtener el rendimiento: {err}")
+                return 0.0
+
+    def obtener_total_invertido(
+        self, id_inversor: int, portafolio: Portafolio
+    ) -> float:
+
+        with connection_mysql() as conn:
+            try:
+                if portafolio and portafolio.acciones:
+                    acciones = json.loads(portafolio.acciones)
+                    total_invertido = 0.0
+                    for accion in acciones:
+                        total_invertido += accion["precio_compra"] * accion["cantidad"]
+                    return round(float(total_invertido), 2)
+                else:
+                    return 0.0
+            except mysql.connector.Error as err:
+                print(f"Error al obtener el total invertido: {err}")
                 return 0.0
