@@ -16,7 +16,7 @@ stream_handler.setFormatter(formatter)
 logger.addHandler(stream_handler)
 
 
-def get_db_config():
+def obtener_config_db():
     try:
         base_path = os.path.dirname(os.path.abspath(__file__))
         config_path = base_path + "/config.json"
@@ -30,8 +30,8 @@ def get_db_config():
     return None
 
 
-def connection_mysql():
-    config = get_db_config()
+def conexion_bd():
+    config = obtener_config_db()
     if config is None:
         return None
 
@@ -41,15 +41,23 @@ def connection_mysql():
             password=config.get("password"),
             host=config.get("host"),
             database=config.get("database"),
-            port=config.get("port", 3306),  # Default port to 3306 if not specified
+            port=config.get("port", 3306),
         )
         return conn
 
     except mysql.connector.Error as err:
-        # Error de acceso denegado (usuario o contraseña incorrectos)
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            logger.error("Usuario o Password no válido")
-        # La base de datos especificada no existe
+            print(
+                "------------------------------------------------------------------------------------------"
+            )
+            logger.error("  Usuario o Password no válido       |")
+            print(
+                "Por favor configure correctamente sus credenciales en el archivo core/DAO/config.json    |"
+            )
+            print(
+                "------------------------------------------------------------------------------------------"
+            )
+            exit(1)
         elif err.errno == errorcode.ER_BAD_DB_ERROR:
             logger.error("La base de datos no existe.")
         else:

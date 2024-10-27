@@ -1,4 +1,4 @@
-def formulario_login():
+def formulario_inicio_sesion():
     print("===== Iniciar sesión =====")
     email = input("Ingrese su correo electrónico: ")
     contraseña = input("Ingrese su contraseña: ")

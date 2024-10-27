@@ -1,8 +1,9 @@
 from interfaces.lista_acciones import imprimir_lista_acciones
-from DAO.acciones_DAO import AccionesDAO
-from DAO.bd_connection import connection_mysql
 
-conexion = connection_mysql()
+from DAO.acciones_DAO import AccionesDAO
+from DAO.bd_conexion import conexion_bd
+
+conexion = conexion_bd()
 
 acciones_DAO = AccionesDAO(conexion)
 

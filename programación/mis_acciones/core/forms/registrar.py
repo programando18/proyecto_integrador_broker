@@ -10,7 +10,7 @@ from utils.validaciones import (
 )
 
 
-def registrar_inversor():
+def formulario_registrar_inversor():
     print("---------- Registro de Inversor ----------")
 
     while True:

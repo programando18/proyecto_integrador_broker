@@ -2,11 +2,12 @@ import json
 
 from interfaces.panel_de_compra_acciones import panel_de_compra_acciones
 from interfaces.panel_de_venta_acciones import panel_de_venta_acciones
+
 from DAO.acciones_DAO import AccionesDAO
 from DAO.portafolio_DAO import PortafolioDAO
-from DAO.bd_connection import connection_mysql
+from DAO.bd_conexion import conexion_bd
 
-conexion = connection_mysql()
+conexion = conexion_bd()
 
 acciones_DAO = AccionesDAO(conexion)
 portafolio_DAO = PortafolioDAO(conexion)

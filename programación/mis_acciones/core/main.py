@@ -1,9 +1,12 @@
 from interfaces.bienvenida import bienvenida
 from interfaces.panel_de_control import panel_de_control
 
-from forms.login import formulario_login
-from forms.register import registrar_inversor
-from forms.recover import ingresar_email, recuperar_contraseña
+from forms.inicio_sesion import formulario_inicio_sesion
+from forms.registrar import formulario_registrar_inversor
+from forms.recuperar_contraseña import (
+    formulario_ingresar_email,
+    formulario_pregunta_secreta,
+)
 
 from models.inversor import Inversor
 from models.portafolio import Portafolio
@@ -12,20 +15,20 @@ from utils.validaciones import validar_contraseña, validar_email
 
 from DAO.inversor_DAO import InversorDAO
 from DAO.portafolio_DAO import PortafolioDAO
-from DAO.bd_connection import connection_mysql
+from DAO.bd_conexion import conexion_bd
 
 
 def main():
     opcion = bienvenida()
 
-    conexion = connection_mysql()
+    conexion = conexion_bd()
 
     inversor_dao = InversorDAO(conexion)
     portafolio_dao = PortafolioDAO(conexion)
 
     while True:
         if opcion == "1":
-            datos_login = formulario_login()
+            datos_login = formulario_inicio_sesion()
 
             while not validar_email(datos_login[0]) or not validar_contraseña(
                 datos_login[1]
@@ -33,7 +36,7 @@ def main():
                 print(
                     "Datos inválidos, por favor intente de nuevo"
                 )  # TODO Mejorar interfaz
-                datos_login = formulario_login()
+                datos_login = formulario_inicio_sesion()
 
             inversor = inversor_dao.obtener_inversor_por_email(datos_login[0])
 
@@ -53,7 +56,7 @@ def main():
 
             opcion = bienvenida()
         elif opcion == "2":
-            email = ingresar_email()
+            email = formulario_ingresar_email()
 
             # Acá nos conectamos con la BBDD y buscamos al inversor
             # inversor_dao.get_inversor(id_inversor)
@@ -64,11 +67,11 @@ def main():
                 "Contraseña": "123456",
             }
             # Si todo va bien hacemos
-            recuperar_contraseña(inversor)
+            formulario_pregunta_secreta(inversor)
 
             opcion = bienvenida()
         elif opcion == "3":
-            datos_inversor = registrar_inversor()
+            datos_inversor = formulario_registrar_inversor()
 
             inversor = Inversor(
                 cuit=datos_inversor["cuit"],
@@ -80,7 +83,7 @@ def main():
                 respuesta_secreta=datos_inversor["respuesta_secreta"],
             )
 
-            inversor_dao.registrar_inversor(inversor)
+            inversor_dao.formulario_registrar_inversor(inversor)
 
             print("Inversor creado exitosamente")  # TODO Mejorar interfaz
             opcion = bienvenida()

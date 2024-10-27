@@ -2,7 +2,7 @@ import email
 from utils.validaciones import validar_cuit, validar_email, validar_respuesta
 
 
-def ingresar_email():
+def formulario_ingresar_email():
     while True:
         email = input("Ingrese por favor su email: ")
         if validar_email(email):
@@ -12,7 +12,7 @@ def ingresar_email():
     return email
 
 
-def recuperar_contraseña(inversor):
+def formulario_pregunta_secreta(inversor):
     while True:
         pregunta = inversor["Pregunta Secreta"]
         respuesta = input(f"{pregunta}: ")
