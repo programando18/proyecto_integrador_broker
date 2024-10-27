@@ -41,11 +41,10 @@ class InversorDAO:
                         inversor.respuesta_secreta,
                     ),
                 )
-                conn.commit()
 
                 id_inversor = cursor.lastrowid
 
-                acciones_json = json.dumps({})
+                acciones_json = json.dumps([])
 
                 cursor.execute(
                     portfolio_query, (id_inversor, 0.0, 1000000.0, acciones_json)
