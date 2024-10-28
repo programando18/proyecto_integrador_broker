@@ -8,7 +8,7 @@ from mysql.connector import Error
 def obtener_config_db():
     try:
         base_path = os.path.dirname(os.path.abspath(__file__))
-        config_path = base_path.replace("/setup", "") + "/config/config.json"
+        config_path = os.path.join(os.path.dirname(base_path), "config", "config.json")
         with open(config_path, "r") as config_file:
             config = json.load(config_file)
             return config

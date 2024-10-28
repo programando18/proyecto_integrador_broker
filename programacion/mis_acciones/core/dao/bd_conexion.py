@@ -19,7 +19,7 @@ logger.addHandler(stream_handler)
 def obtener_config_db():
     try:
         base_path = os.path.dirname(os.path.abspath(__file__))
-        config_path = base_path.replace("/dao", "") + "/config/config.json"
+        config_path = os.path.join(base_path, "..", "config", "config.json")
         with open(config_path, "r") as config_file:
             config = json.load(config_file)
             return config
