@@ -68,11 +68,14 @@ def main():
         elif opcion == "2":
             email = formulario_ingresar_email()
 
-            usuario = {
-                "Pregunta Secreta": "¿Cuál es tu color favorito?",
-                "Respuesta Secreta": "Rojo",
-                "Contraseña": "123456",
-            }
+
+            while not validar_email(email):
+                print(
+                    "Datos inválidos, por favor intente de nuevo"
+                )  # TODO Mejorar interfaz
+                email = formulario_ingresar_email()
+
+            inversor = inversor_dao.obtener_inversor_por_email(email)
 
             formulario_pregunta_secreta(inversor)
 

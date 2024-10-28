@@ -14,12 +14,12 @@ def formulario_ingresar_email():
 
 def formulario_pregunta_secreta(inversor):
     while True:
-        pregunta = inversor["Pregunta Secreta"]
-        respuesta = input(f"{pregunta}: ")
+        pregunta = inversor.pregunta_secreta
+        respuesta = input(f"{pregunta}?: ")
         if not validar_respuesta(respuesta):
             print("La respuesta no puede estar vacía.")
-        if respuesta == inversor["Respuesta Secreta"]:
-            print(f"Su contraseña es: {inversor['Contraseña']}")
+        if respuesta == inversor.respuesta_secreta:
+            print(f"Su contraseña es: {inversor.contraseña}")
             break
         else:
             print("Respuesta incorrecta.")
