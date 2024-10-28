@@ -22,16 +22,35 @@ El objetivo principal de esta aplicación es ofrecer una experiencia de usuario 
 ## Instalación
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/tu_usuario/MisAcciones.git
-
-2. Instala las dependencias necesarias (si aplica) por consola:
-pip install -r requirements.txt
-
-##Uso
-1. Ejecutar en la consola
-   python main.py
+   git clone https://github.com/programando18/proyecto_integrador_broker
+   ```
+2. Navega hasta la ubicación correcta
+   ```bash
+   cd proyecto_integrador/programacion/mis_acciones
+   ```
+3. Instalar dependencias de Python
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Modificar archivo config.json para acceder a la Base de Datos
+   ```bash
+   cd core/config
+   ```
+   *abrir config.json con tu editor de texto y reemplazar user y password de ser necesario
    
-2. Sigue las instrucciones en la consola para registrarte o iniciar sesión.
+6. Poblar Base de Datos
+   ```bash
+   cd ..
+   python setup/poblar_bbdd.py
+   ```
+7. Correr simulador de variación de precios (en terminal separada para que corra en segundo plano)
+   ```bash
+   python setup/simulador.py
+   ```
+8. Ejecutar app
+   ```bash
+   python main.py
+   ```
 
 ## Equipo de trabajo
 
