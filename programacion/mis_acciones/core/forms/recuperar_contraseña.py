@@ -14,6 +14,11 @@ def formulario_ingresar_email():
 
 
 def formulario_pregunta_secreta(inversor):
+    if inversor is None:
+        print("   ---------------------")
+        print("   Usuario no encontrado")
+        print("   ---------------------")
+        return
     while True:
         pregunta = inversor.pregunta_secreta
         print("   ===== PREGUNTA SECRETA =====")
