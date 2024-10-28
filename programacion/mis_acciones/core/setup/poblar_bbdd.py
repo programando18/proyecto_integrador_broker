@@ -54,14 +54,28 @@ def conexion_bd():
     return None
 
 
-def ejecutar_query(query, data=None):
+def ejecutar_query():
     conexion = conexion_bd()
+
+    queries = [
+        "INSERT INTO acciones (simbolo, nombre, precio_compra_actual, precio_venta_actual, cantidad) VALUES ('AAPL', 'Apple Inc.', 150.25, 152.00, 100);",
+        "INSERT INTO acciones (simbolo, nombre, precio_compra_actual, precio_venta_actual, cantidad) VALUES ('GOOGL', 'Alphabet Inc.', 2800.75, 2825.50, 50);",
+        "INSERT INTO acciones (simbolo, nombre, precio_compra_actual, precio_venta_actual, cantidad) VALUES ('AMZN', 'Amazon.com, Inc.', 3400.30, 3420.10, 30);",
+        "INSERT INTO acciones (simbolo, nombre, precio_compra_actual, precio_venta_actual, cantidad) VALUES ('TSLA', 'Tesla, Inc.', 720.15, 725.40, 75);",
+        "INSERT INTO acciones (simbolo, nombre, precio_compra_actual, precio_venta_actual, cantidad) VALUES ('MSFT', 'Microsoft Corporation', 299.90, 305.00, 200);",
+        "INSERT INTO acciones (simbolo, nombre, precio_compra_actual, precio_venta_actual, cantidad) VALUES ('NFLX', 'Netflix, Inc.', 645.50, 650.75, 60);",
+        "INSERT INTO acciones (simbolo, nombre, precio_compra_actual, precio_venta_actual, cantidad) VALUES ('NVDA', 'NVIDIA Corporation', 220.15, 225.30, 120);",
+        "INSERT INTO acciones (simbolo, nombre, precio_compra_actual, precio_venta_actual, cantidad) VALUES ('FB', 'Meta Platforms, Inc.', 330.20, 335.10, 80);",
+        "INSERT INTO acciones (simbolo, nombre, precio_compra_actual, precio_venta_actual, cantidad) VALUES ('BABA', 'Alibaba Group Holding Limited', 180.30, 185.00, 90);",
+    ]
+
     try:
         cursor = conexion.cursor()
-        cursor.execute(query, data)
+        for query in queries:
+            cursor.execute(query)
         conexion.commit()
-        print(f"Query ejecutada con éxito: {query}")
-    except Error as e:
+        print("Base de datos poblada con éxito.")
+    except mysql.connector.Error as e:
         print(f"Error al ejecutar la query: {e}")
     finally:
         if conexion.is_connected():
@@ -69,26 +83,4 @@ def ejecutar_query(query, data=None):
             conexion.close()
 
 
-query = """
-INSERT INTO acciones (simbolo, nombre, precio_compra_actual, precio_venta_actual, cantidad)
-VALUES ('AAPL', 'Apple Inc.', 150.25, 152.00, 100);
-INSERT INTO acciones (simbolo, nombre, precio_compra_actual, precio_venta_actual, cantidad)
-VALUES ('GOOGL', 'Alphabet Inc.', 2800.75, 2825.50, 50);
-INSERT INTO acciones (simbolo, nombre, precio_compra_actual, precio_venta_actual, cantidad)
-VALUES ('AMZN', 'Amazon.com, Inc.', 3400.30, 3420.10, 30);
-INSERT INTO acciones (simbolo, nombre, precio_compra_actual, precio_venta_actual, cantidad)
-VALUES ('TSLA', 'Tesla, Inc.', 720.15, 725.40, 75);
-INSERT INTO acciones (simbolo, nombre, precio_compra_actual, precio_venta_actual, cantidad)
-VALUES ('MSFT', 'Microsoft Corporation', 299.90, 305.00, 200);
-INSERT INTO acciones (simbolo, nombre, precio_compra_actual, precio_venta_actual, cantidad)
-VALUES ('NFLX', 'Netflix, Inc.', 645.50, 650.75, 60);
-INSERT INTO acciones (simbolo, nombre, precio_compra_actual, precio_venta_actual, cantidad)
-VALUES ('NVDA', 'NVIDIA Corporation', 220.15, 225.30, 120);
-INSERT INTO acciones (simbolo, nombre, precio_compra_actual, precio_venta_actual, cantidad)
-VALUES ('FB', 'Meta Platforms, Inc.', 330.20, 335.10, 80);
-INSERT INTO acciones (simbolo, nombre, precio_compra_actual, precio_venta_actual, cantidad)
-VALUES ('BABA', 'Alibaba Group Holding Limited', 180.30, 185.00, 90);
-"""
-
-
-ejecutar_query(query)
+ejecutar_query()
