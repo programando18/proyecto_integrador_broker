@@ -1,4 +1,3 @@
-
 from interfaces.bienvenida import bienvenida
 from interfaces.panel_de_control import panel_de_control
 
@@ -74,7 +73,7 @@ def main():
                 "Respuesta Secreta": "Rojo",
                 "Contraseña": "123456",
             }
-            # Si todo va bien hacemos
+
             formulario_pregunta_secreta(inversor)
 
             opcion = bienvenida()
@@ -91,7 +90,7 @@ def main():
                 respuesta_secreta=datos_inversor["respuesta_secreta"],
             )
 
-            inversor_dao.formulario_registrar_inversor(inversor)
+            inversor_dao.registrar_inversor(inversor)
 
             print("Inversor creado exitosamente")  # TODO Mejorar interfaz
             opcion = bienvenida()

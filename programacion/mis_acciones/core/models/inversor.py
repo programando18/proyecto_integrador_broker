@@ -1,7 +1,7 @@
 class Inversor:
     def __init__(
         self,
-        id_inversor,
+        id_inversor=0,
         cuit="",
         nombre="",
         apellido="",
