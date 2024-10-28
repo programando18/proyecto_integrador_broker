@@ -44,7 +44,8 @@ def imprimir_panel(usuario, portafolio_DAO):
     print("|||-------Seleccione una opción:--------|||")
     print("||| 1. Comprar Acciones                 |||")
     print("||| 2. Vender Acciones                  |||")
-    print("||| 3. Salir                            |||")
+    print("||| 3. Mostrar últimas transacciones    |||")
+    print("||| 4. Salir                            |||")
     print("|||-------------------------------------|||")
 
 
@@ -56,7 +57,7 @@ def panel_de_control(
 
     opcion = input("    Qué deseas hacer?: ")
 
-    while opcion != "3":
+    while opcion != "4":
         if opcion == "1":
             seleccion = panel_de_compra_acciones()
             accion = seleccion["accion"]
@@ -141,6 +142,21 @@ def panel_de_control(
             opcion = input("    Qué deseas hacer?: ")
 
         elif opcion == "3":
+            transacciones = registro_transacciones_DAO.obtener_lista_transacciones(
+                usuario.id_inversor
+            )
+            print("   ---------------ULTIMAS TRANSACCIONES--------------------   ")
+            if not transacciones:
+                print("No hay transacciones recientes.")
+            for idx, transaccion in enumerate(transacciones, start=1):
+                print(
+                    f"|{idx}. {transaccion['fecha']} {transaccion['tipo_operacion']} {transaccion['simbolo']} - Cantidad: {transaccion['cantidad']} - Precio Unidad: {transaccion['precio_unidad']} - Precio Total: {transaccion['precio_total']}    "
+                )
+            print("   --------------------------------------------------------   ")
+
+            opcion = input("    Qué deseas hacer?: ")
+
+        elif opcion == "4":
             break
         else:
             raise ("Opción inválida")

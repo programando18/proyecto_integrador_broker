@@ -33,3 +33,17 @@ class RegistroTransaccionesDAO:
         except mysql.connector.Error as err:
             raise (f"Error al registrar la transacción: {err}")
             return None
+
+    def obtener_lista_transacciones(self, id_inversor: int) -> list:
+        query = "SELECT * FROM registro_transacciones WHERE id_inversor = %s"
+
+        if not self.conexion.is_connected():
+            self.conexion.reconnect()
+
+        try:
+            cursor = self.conexion.cursor(dictionary=True)
+            cursor.execute(query, (id_inversor,))
+            return cursor.fetchall()
+        except mysql.connector.Error as err:
+            raise (f"Error al obtener la lista de transacciones: {err}")
+            return None
