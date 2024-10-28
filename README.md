@@ -43,11 +43,13 @@ El objetivo principal de esta aplicación es ofrecer una experiencia de usuario 
    cd ..
    python setup/poblar_bbdd.py
    ```
-7. Correr simulador de variación de precios (en terminal separada para que corra en segundo plano)
+7. (Opcional) Correr simulador de variación de precios (en terminal separada para que corra en segundo plano)
    ```bash
    python setup/simulador.py
    ```
-8. Ejecutar app
+   Éste script simula una variación de precios de compra en las acciones disponibles. Cada 60 segundos, las acciones cambian de precio.
+   Si no se ejecuta, la variable Rendimiento en el Portafolio no va a mostrar ningun cambio.
+9. Ejecutar app
    ```bash
    python main.py
    ```
