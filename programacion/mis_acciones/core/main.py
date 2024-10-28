@@ -37,20 +37,24 @@ def main():
             while not validar_email(datos_login[0]) or not validar_contraseña(
                 datos_login[1]
             ):
-                print(
-                    "Datos inválidos, por favor intente de nuevo"
-                )  # TODO Mejorar interfaz
+                print("   -------------------------------------------")
+                print("   Datos inválidos, por favor intente de nuevo")
+                print("   -------------------------------------------")
                 datos_login = formulario_inicio_sesion()
 
             inversor = inversor_dao.obtener_inversor_por_email(datos_login[0])
 
             if inversor is None:
-                print("Usuario no encontrado")  # TODO Mejorar interfaz
+                print("   ---------------------")
+                print("   Usuario no encontrado")
+                print("   ---------------------")
                 opcion = bienvenida()
                 continue
 
             if inversor.contraseña != datos_login[1]:
-                print("Contraseña incorrecta")  # TODO Mejorar interfaz
+                print("   ---------------------")
+                print("   Contraseña incorrecta")
+                print("   ---------------------")
                 opcion = bienvenida()
                 continue
 
@@ -68,11 +72,10 @@ def main():
         elif opcion == "2":
             email = formulario_ingresar_email()
 
-
             while not validar_email(email):
-                print(
-                    "Datos inválidos, por favor intente de nuevo"
-                )  # TODO Mejorar interfaz
+                print("   ------------------------------------------- ")
+                print("   Datos inválidos, por favor intente de nuevo")
+                print("   -------------------------------------------")
                 email = formulario_ingresar_email()
 
             inversor = inversor_dao.obtener_inversor_por_email(email)
@@ -94,11 +97,14 @@ def main():
             )
 
             inversor_dao.registrar_inversor(inversor)
-
-            print("Inversor creado exitosamente")  # TODO Mejorar interfaz
+            print("   ----------------------------")
+            print("   Inversor creado exitosamente")
+            print("   ----------------------------")
             opcion = bienvenida()
         elif opcion == "4":
-            print("Gracias por usar Mis Acciones")  # TODO Mejorar interfaz
+            print("     |===================================|")
+            print("     |   Gracias por usar Mis Acciones   |")
+            print("     |===================================|")
             return
         else:
             print("Opción inválida")  # TODO Mejorar interfaz

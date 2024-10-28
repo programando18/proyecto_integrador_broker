@@ -28,5 +28,5 @@ def bienvenida():
     print("|||   4. Salir                               |||")
     print("|||  -------------------------------------   |||")
 
-    opcion = input("Opción: ")
+    opcion = input("     Opción: ")
     return opcion

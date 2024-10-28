@@ -11,52 +11,52 @@ from utils.validaciones import (
 
 
 def formulario_registrar_inversor():
-    print("---------- Registro de Inversor ----------")
+    print("   ===== REGISTRAR INVERSOR =====")
 
     while True:
-        cuit = input("Ingrese por favor su CUIT: ").strip()
+        cuit = input("   Ingrese por favor su CUIT: ").strip()
         if validar_cuit(cuit):
             break
         else:
             print("Error: El CUIT debe tener 11 dígitos numéricos.")
 
     while True:
-        nombre = input("Ingrese su nombre: ").strip()
+        nombre = input("   Ingrese su nombre: ").strip()
         if validar_nombre(nombre):
             break
         else:
             print("Error: El nombre solo debe contener letras.")
 
     while True:
-        apellido = input("Ingrese su apellido: ").strip()
+        apellido = input("   Ingrese su apellido: ").strip()
         if validar_nombre(apellido):
             break
         else:
             print("Error: El apellido solo debe contener letras.")
 
     while True:
-        email = input("Ingrese su email: ").strip()
+        email = input("   Ingrese su email: ").strip()
         if validar_email(email):
             break
         else:
             print("Error: El correo electrónico no es válido.")
 
     while True:
-        contraseña = input("Elija una contraseña: ").strip()
+        contraseña = input("   Elija una contraseña: ").strip()
         if validar_contraseña(contraseña):
             break
         else:
             print("Error: La contraseña debe tener al menos 8 caracteres.")
 
     while True:
-        pregunta_secreta = input("Ingrese su pregunta secreta: ")
+        pregunta_secreta = input("   Ingrese su pregunta secreta: ")
         if validar_pregunta(pregunta_secreta):
             break
         else:
             print("Error: La pregunta no puede estar vacía.")
 
     while True:
-        respuesta_secreta = input("Ingrese su respuesta secreta: ").strip()
+        respuesta_secreta = input("   Ingrese su respuesta secreta: ").strip()
         if validar_respuesta(respuesta_secreta):
             break
         else:
