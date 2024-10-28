@@ -29,7 +29,6 @@ def conexion_bd():
             user=config.get("user"),
             password=config.get("password"),
             host=config.get("host"),
-            database=config.get("database"),
             port=config.get("port", 3306),
         )
         return conn
@@ -57,7 +56,15 @@ def conexion_bd():
 def ejecutar_query():
     conexion = conexion_bd()
 
-    queries = [
+    creates = [
+        "CREATE TABLE IF NOT EXISTS inversores (id_inversor INT PRIMARY KEY AUTO_INCREMENT, cuit VARCHAR(11) NOT NULL, nombre VARCHAR(50) NOT NULL, apellido VARCHAR(50) NOT NULL, email VARCHAR(100) NOT NULL, contraseña VARCHAR(100) NOT NULL, saldo FLOAT DEFAULT 0, fecha_alta DATE, pregunta_secreta VARCHAR(100), respuesta_secreta VARCHAR(100));",
+        "CREATE TABLE IF NOT EXISTS acciones (id_accion INT PRIMARY KEY AUTO_INCREMENT, simbolo VARCHAR(10) NOT NULL, nombre VARCHAR(100) NOT NULL, precio_compra_actual FLOAT NOT NULL, precio_venta_actual FLOAT NOT NULL, cantidad INT NOT NULL);",
+        "CREATE TABLE IF NOT EXISTS historico_cotizaciones (id_historico INT PRIMARY KEY AUTO_INCREMENT, fecha_cotizacion DATE NOT NULL, precio_compra FLOAT NOT NULL, precio_venta FLOAT NOT NULL, cantidad_venta INT NOT NULL, cantidad_compra INT NOT NULL, id_accion INT NOT NULL, FOREIGN KEY (id_accion) REFERENCES acciones(id_accion));",
+        "CREATE TABLE IF NOT EXISTS registro_transacciones (id_transaccion INT PRIMARY KEY AUTO_INCREMENT, id_inversor INT, nombre_inversor VARCHAR(100) NOT NULL, tipo_operacion VARCHAR(6) NOT NULL, simbolo VARCHAR(10) NOT NULL, cantidad INT NOT NULL, precio_unidad FLOAT NOT NULL, precio_total FLOAT NOT NULL, fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (id_inversor) REFERENCES inversores(id_inversor));",
+        "CREATE TABLE IF NOT EXISTS portafolios (id_portafolio INT PRIMARY KEY AUTO_INCREMENT, id_inversor INT, total_invertido FLOAT, saldo FLOAT, acciones JSON NOT NULL, FOREIGN KEY (id_inversor) REFERENCES inversores(id_inversor));",
+    ]
+
+    inserts = [
         "INSERT INTO acciones (simbolo, nombre, precio_compra_actual, precio_venta_actual, cantidad) VALUES ('AAPL', 'Apple Inc.', 150.25, 152.00, 100);",
         "INSERT INTO acciones (simbolo, nombre, precio_compra_actual, precio_venta_actual, cantidad) VALUES ('GOOGL', 'Alphabet Inc.', 2800.75, 2825.50, 50);",
         "INSERT INTO acciones (simbolo, nombre, precio_compra_actual, precio_venta_actual, cantidad) VALUES ('AMZN', 'Amazon.com, Inc.', 3400.30, 3420.10, 30);",
@@ -71,7 +78,12 @@ def ejecutar_query():
 
     try:
         cursor = conexion.cursor()
-        for query in queries:
+        cursor.execute("CREATE DATABASE IF NOT EXISTS arg_broker;")
+        conexion.database = "arg_broker"
+
+        for query in creates:
+            cursor.execute(query)
+        for query in inserts:
             cursor.execute(query)
         conexion.commit()
         print("Base de datos poblada con éxito.")
